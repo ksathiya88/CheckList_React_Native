@@ -1,12 +1,47 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import firebase from 'firebase';
-import { Header, Spinner } from './common';
+import { createStackNavigator } from 'react-navigation';
+
+
+import { Card, CardSection, Input, Button, Spinner } from './common';
 import LoginForm from './components/loginForm';
 import CheckList from './components/checklist';
 
-class App extends Component {
-  state = { loggedIn: 'sssss', uid: '' };
+class Home extends Component {
+  static navigationOptions = {
+    headerTitle: 'Home',
+  };
+
+
+  // retrieveCards() {
+  //   // const newRef = firebase.database().ref('User' + this.state.uid + '/');
+  //   // newRef.limitToFirst(100);
+  //   console.log("heellloooooo2222");
+  //   return firebase.database().ref('User' + this.state.uid + '/').once('value').then(function(snapshot) {
+  //     // var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+  //     console.log("data_got",JSON.stringify(snapshot));
+  //     debugger;
+  //   //   {this.snapshot.items.map((item, index) =>
+  //   //     <CardSection>
+  //   //         <Input
+  //   //             placeholder="CheckList Item"
+  //   //             value={item}
+  //   //             onChangeText={(text) => this.handleItem(text, index)}
+  //   //         />
+  //   //     </CardSection>
+  //   // )
+  //   // }
+
+  //   }
+  // }
+
+  state = {
+    loggedIn: 'sssss',
+    uid: '',
+    createCheckList: false,
+    checklist: [{ title: '', index: '', items: [] }]
+  };
 
   componentWillMount() {
     firebase.initializeApp({
@@ -17,8 +52,8 @@ class App extends Component {
       storageBucket: 'checklistapp-cd1b7.appspot.com',
       messagingSenderId: '921785370927'
     });
- 
-    
+
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true, uid: user.uid });
@@ -28,13 +63,23 @@ class App extends Component {
     });
   }
 
+  createCheckList() {
+
+  }
+
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
         return (
           <View >
-            <Header headerText="Create Checklist" />
-            <CheckList uid={this.state.uid} />
+            <Card>
+              <CardSection>
+                <Button
+                  onPress={() =>
+                    this.props.navigation.navigate('Create_CheckList', { uid: this.state.uid })}
+                ><Text>Create CheckList</Text></Button>
+              </CardSection>
+            </Card>
           </View>
         );
       case false:
@@ -45,12 +90,29 @@ class App extends Component {
   }
 
   render() {
+    console.log('heellloooooo1111');
+    console.log("heellloooooo2222");
+    //this.retrieveCards();
+    firebase.database().ref('User' + this.state.uid + '/').once('value').then((snapshot) => {
+      //     // var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+      debugger;
+      console.log("data_got", JSON.stringify(snapshot));
+      let ddd = JSON.stringify(snapshot);
+      let ddd11 = JSON.stringify(snapshot.val());
+      let ddd3333 = JSON.stringify(snapshot.val());
+    });
+
     return (
       <View>
-        {this.renderContent()}
+        {/* {this.renderContent()} */}
       </View>
     );
   }
 }
+
+const App = createStackNavigator({
+  Home: { screen: Home },
+  Create_CheckList: { screen: CheckList },
+});
 
 export default App;

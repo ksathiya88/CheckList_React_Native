@@ -6,6 +6,11 @@ import { Card, CardSection, Input, Button } from '../common';
 
 class CheckList extends Component {
 
+    static navigationOptions = {
+        headerTitle: 'Create CheckList',
+    };
+    
+
     state = {
         title: '',
         items: ['']
@@ -27,16 +32,18 @@ class CheckList extends Component {
     }
 
     addChecklist = () => {
-        firebase.database().ref('User' + this.props.uid + '/').set(
-             this.state
+        const newRef = firebase.database().ref('User' + this.props.navigation.getParam('uid') + '/')
+        .push();
+        newRef.set(this.state
         ).then((data) => {
             //success callback
             console.log('data ', data);
+            this.props.navigation.goBack();
         })
-        .catch((error) => {
-            //error callback
-            console.log('error ', error);
-        });
+            .catch((error) => {
+                //error callback
+                console.log('error ', error);
+            });
     }
 
     render() {
@@ -51,12 +58,12 @@ class CheckList extends Component {
                 {this.state.items.map((item, index) =>
                     <CardSection>
                         <Input
-                        placeholder="CheckList Item"
-                        value={item}
-                        onChangeText={(text) => this.handleItem(text, index)}
+                            placeholder="CheckList Item"
+                            value={item}
+                            onChangeText={(text) => this.handleItem(text, index)}
                         />
-                    </CardSection> 
-                    )
+                    </CardSection>
+                )
                 }
                 <CardSection>
                     <Button
