@@ -12,6 +12,7 @@ class CheckListCreate extends Component {
     }
 
     render() {
+        console.log('createProps11', this.props);
         return (
             <Card>
                 <CheckListForm {...this.props} />
@@ -26,6 +27,7 @@ class CheckListCreate extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log('createProps', state);
     const { name, phone, shift } = state.checkListForm;
 
     return { name, phone, shift };

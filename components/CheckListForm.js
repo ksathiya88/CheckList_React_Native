@@ -6,6 +6,7 @@ import { CardSection, Input } from '../common';
 
 class CheckListForm extends Component {
     render() {
+        console.log('props--form', this.props);
         return (
             <View>
                 <CardSection>
@@ -61,7 +62,7 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { name, phone, shift } = state.employeeForm;
+    const { name, phone, shift } = state.checkListForm;
 
     return { name, phone, shift };
 };

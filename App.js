@@ -39,13 +39,9 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = function({
-    email,
-    password,
-    error,
-    loading,
-    loggedIn,
-}) {
+const mapStateToProps = state => {
+    console.log('State', state);
+    const { email, password, error, loading, loggedIn } = state.auth;
     console.log('State', email, password, error, loading, loggedIn);
     return {
         email,
