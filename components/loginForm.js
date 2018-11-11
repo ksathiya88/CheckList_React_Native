@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import { setUser, setPassword, loginUser } from '../actions';
+import { setUser, setPassword, loginUser } from '../actions/AuthActions';
 import { Card, CardSection, Input, Button, Spinner } from '../common';
 
 class LoginForm extends Component {
@@ -66,7 +66,8 @@ const styles = {
     },
 };
 
-const mapStateToProps = ({ email, password, error, loading }) => {
+const mapStateToProps = ({ auth }) => {
+    const { email, password, error, loading } = auth;
     return { email, password, error, loading };
 };
 

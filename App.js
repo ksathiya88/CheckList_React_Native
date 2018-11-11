@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 //import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { logout } from './actions';
+import { logout } from './actions/AuthActions';
 
 import { Card, CardSection, Button } from './common';
 //import CheckList from './components/checklist';

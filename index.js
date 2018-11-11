@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import React, { Component } from 'react';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
-import reducer from './reducers';
+import reducer from './reducers/AuthReducer';
 import Router from './Router';
 
 class Index extends Component {
