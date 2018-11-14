@@ -10,15 +10,19 @@ const RouterComponent = () => {
         <Router sceneStyle={{ paddingTop: 65 }}>
             <Scene key="root">
                 <Scene
+                    key="login"
+                    component={LoginForm}
+                    title="Please Login"
+                    intial
+                />
+                <Scene
                     key="checkList"
                     component={App}
                     onRight={() => Actions.checklistCreate()}
                     rightTitle="Create CheckList"
                     title="Checklist"
-                    initial
                 />
                 <Scene key="checklistCreate" component={ChecklistCreate} />
-                <Scene key="login" component={LoginForm} title="Please Login" />
             </Scene>
         </Router>
     );

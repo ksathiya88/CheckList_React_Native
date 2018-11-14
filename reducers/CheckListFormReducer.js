@@ -5,9 +5,8 @@ import {
 } from '../constant';
 
 const INITIAL_STATE = {
-    name: '',
-    phone: '',
-    shift: '',
+    items: [],
+    title: '',
 };
 
 export default (state = INITIAL_STATE, action) => {

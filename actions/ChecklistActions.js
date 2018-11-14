@@ -2,10 +2,12 @@ import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import {
     CHECKLIST_UPDATE,
+    CHECKLIST_ITEM_UPDATE,
+    CHECKLIST_ADD_ITEM,
     CHECKLIST_CREATE,
     CHECKLISTS_FETCH_SUCCESS,
     CHECKLIST_SAVE_SUCCESS,
-} from '../actions';
+} from '../constant';
 
 export const checkListUpdate = ({ prop, value }) => {
     return {
@@ -14,17 +16,38 @@ export const checkListUpdate = ({ prop, value }) => {
     };
 };
 
+export const checkListItemsUpdate = ({ value, index }) => {
+    return {
+        type: CHECKLIST_ITEM_UPDATE,
+        payload: { value, index },
+    };
+};
+
+export const checkListAddItems = () => {
+    return {
+        type: CHECKLIST_ADD_ITEM,
+    };
+};
+
 export const checkListCreate = ({ name, phone, shift }) => {
     const { currentUser } = firebase.auth();
 
+    console.log('Checklist Action', currentUser);
     return dispatch => {
-        firebase
+        const newRef = firebase
             .database()
-            .ref(`/users/${currentUser.uid}/checklists`)
-            .push({ name, phone, shift })
-            .then(() => {
-                dispatch({ type: CHECKLIST_CREATE });
-                Actions.checkList({ type: 'reset' });
+            .ref('User' + currentUser.uid + '/')
+            .push();
+        newRef
+            .set({ name, phone, shift })
+            .then(data => {
+                //success callback
+                console.log('data ', data);
+                //this.props.navigation.goBack();
+            })
+            .catch(error => {
+                //error callback
+                console.log('error ', error);
             });
     };
 };
