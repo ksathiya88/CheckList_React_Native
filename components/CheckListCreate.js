@@ -7,9 +7,9 @@ import CheckListForm from './CheckListForm';
 class CheckListCreate extends Component {
     onButtonPress() {
         console.log('Button press');
-        const { name, phone, shift } = this.props;
+        const { title, items } = this.props;
 
-        this.props.checkListCreate({ name, phone, shift: shift || 'Monday' });
+        this.props.checkListCreate({ title, items });
     }
 
     render() {
@@ -29,9 +29,9 @@ class CheckListCreate extends Component {
 
 const mapStateToProps = state => {
     console.log('createProps', state);
-    const { name, phone, shift } = state.checkListForm;
+    const { title, items } = state.checkListForm;
 
-    return { name, phone, shift };
+    return { title, items };
 };
 
 export default connect(

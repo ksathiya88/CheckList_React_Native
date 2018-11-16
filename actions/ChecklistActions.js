@@ -10,16 +10,18 @@ import {
 } from '../constant';
 
 export const checkListUpdate = ({ prop, value }) => {
+    console.log('inside', prop, value);
     return {
         type: CHECKLIST_UPDATE,
         payload: { prop, value },
     };
 };
 
-export const checkListItemsUpdate = ({ value, index }) => {
+export const checkListItemsUpdate = ({ prop, index }) => {
+    console.log('inside item Update ', prop, index);
     return {
         type: CHECKLIST_ITEM_UPDATE,
-        payload: { value, index },
+        payload: { prop, index },
     };
 };
 
@@ -29,7 +31,7 @@ export const checkListAddItems = () => {
     };
 };
 
-export const checkListCreate = ({ name, phone, shift }) => {
+export const checkListCreate = ({ title, items }) => {
     const { currentUser } = firebase.auth();
 
     console.log('Checklist Action', currentUser);
@@ -39,7 +41,7 @@ export const checkListCreate = ({ name, phone, shift }) => {
             .ref('User' + currentUser.uid + '/')
             .push();
         newRef
-            .set({ name, phone, shift })
+            .set({ title, items })
             .then(data => {
                 //success callback
                 console.log('data ', data);

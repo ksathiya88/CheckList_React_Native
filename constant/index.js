@@ -6,6 +6,7 @@ export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGOUT = 'logout';
 
+export const CHECKLIST_UPDATE = 'checklist_update';
 export const CHECKLIST_ITEM_UPDATE = 'checklist_item_update';
 export const CHECKLIST_ADD_ITEM = 'checklist_add_item';
 export const CHECKLIST_CREATE = 'checklist_create';

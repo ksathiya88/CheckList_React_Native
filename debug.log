@@ -1,0 +1,7 @@
+[1115/183802.757:ERROR:scoped_process_suspend.cc(31)] NtSuspendProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1115/183803.085:ERROR:process_info.cc(118)] ReadProcessMemory bool __cdecl crashpad::(anonymous namespace)::ReadStruct(HANDLE, crashpad::WinVMAddress, T *) [T = crashpad::process_types::PEB<crashpad::process_types::internal::Traits64>]: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[1115/183803.085:ERROR:process_info.cc(545)] ReadProcessData failed
+[1115/183803.085:ERROR:process_reader_win.cc(242)] ReadMemory at 0x7ffc6e3654d0 of 12 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[1115/183803.085:WARNING:process_snapshot_win.cc(69)] ReadMemory ExceptionInformation failed
+[1115/183803.163:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[1115/183803.163:ERROR:exception_snapshot_win.cc(88)] thread ID 11496 not found in process
