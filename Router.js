@@ -3,6 +3,7 @@ import { Router, Scene, Actions } from 'react-native-router-flux';
 import LoginForm from './components/loginForm';
 import App from './App';
 import ChecklistCreate from './components/CheckListCreate';
+import ChecklistEdit from './components/CheckListEdit';
 //import HelloThere from './HelloThere';
 
 const RouterComponent = () => {
@@ -19,6 +20,7 @@ const RouterComponent = () => {
                     intial
                 />
                 <Scene key="checklistCreate" component={ChecklistCreate} />
+                <Scene key="checklistEdit" component={ChecklistEdit} />
             </Scene>
         </Router>
     );

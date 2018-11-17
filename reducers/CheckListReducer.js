@@ -1,7 +1,13 @@
-//import { EMPLOYEES_FETCH_SUCCESS } from '../actions/types';
+import { CHECKLISTS_FETCH_SUCCESS } from '../constant';
 
 const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
-    return state;
+    console.log('checklistReducer', state, action);
+    switch (action.type) {
+        case CHECKLISTS_FETCH_SUCCESS:
+            return action.payload;
+        default:
+            return state;
+    }
 };

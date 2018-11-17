@@ -10,13 +10,10 @@ import { CardSection, Input, Button, Card } from '../common';
 
 class CheckListForm extends Component {
     render() {
-        console.log('checklistForm--props', this.props);
+        //console.log('checklistForm--props', this.props);
         return (
             <Card>
                 <CardSection>
-                    <Button onPress={() => this.logout()}>
-                        <Text> Logout </Text>
-                    </Button>
                     <Input
                         placeholder="CheckList Title"
                         value={this.props.title}

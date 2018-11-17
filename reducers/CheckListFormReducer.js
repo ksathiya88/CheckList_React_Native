@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case CHECKLIST_UPDATE:
             console.log('checklistupdate', state, action);
-            return { ...state, title: action.payload.value };
+            return { ...state, [action.payload.prop]: action.payload.value };
         case CHECKLIST_ITEM_UPDATE:
             console.log('checklistitem update', state, action);
             stateTemp = { ...state };

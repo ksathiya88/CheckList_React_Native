@@ -1,16 +1,44 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-//import firebase from 'firebase';
+import { View, Text, ListView } from 'react-native';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { logout } from './actions/AuthActions';
+import { checkListFetch } from './actions/ChecklistActions';
+import ListItem from './components/ListItem';
 
 import { Card, CardSection, Button } from './common';
 //import CheckList from './components/checklist';
 
 class App extends Component {
+    componentWillMount() {
+        this.props.checkListFetch();
+
+        this.createDataSource(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // nextProps are the next set of props that this component
+        // will be rendered with
+        // this.props is still the old set of props
+
+        this.createDataSource(nextProps);
+    }
+
     onButtonPress() {
         console.log('heellloooooobutton', this.props);
         this.props.logout();
+    }
+
+    createDataSource({ checklists }) {
+        const ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2,
+        });
+
+        this.dataSource = ds.cloneWithRows(checklists);
+    }
+
+    renderRow(checklist) {
+        return <ListItem checklist={checklist} />;
     }
 
     render() {
@@ -26,13 +54,11 @@ class App extends Component {
                         </Button>
                     </CardSection>
                 </Card>
-                <Card>
-                    <CardSection>
-                        <Button>
-                            <Text>Create CheckList</Text>
-                        </Button>
-                    </CardSection>
-                </Card>
+                <ListView
+                    enableEmptySections
+                    dataSource={this.dataSource}
+                    renderRow={this.renderRow}
+                />
             </View>
         );
         // return <View> {this.renderContent()} </View>;
@@ -40,19 +66,15 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('State', state);
-    const { email, password, error, loading, loggedIn } = state.auth;
-    console.log('State', email, password, error, loading, loggedIn);
-    return {
-        email,
-        password,
-        error,
-        loading,
-        loggedIn,
-    };
+    const checklists = _.map(state.checkLists, (val, uid) => {
+        return { ...val, uid };
+    });
+
+    console.log('checkLists', checklists);
+    return { checklists };
 };
 
 export default connect(
     mapStateToProps,
-    { logout }
+    { logout, checkListFetch }
 )(App);

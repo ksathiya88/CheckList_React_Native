@@ -6,7 +6,6 @@ import {
     CHECKLIST_ADD_ITEM,
     CHECKLIST_CREATE,
     CHECKLISTS_FETCH_SUCCESS,
-    CHECKLIST_SAVE_SUCCESS,
 } from '../constant';
 
 export const checkListUpdate = ({ prop, value }) => {
@@ -45,6 +44,8 @@ export const checkListCreate = ({ title, items }) => {
             .then(data => {
                 //success callback
                 console.log('data ', data);
+                dispatch({ type: CHECKLIST_CREATE });
+                Actions.checkList({ type: 'reset' });
                 //this.props.navigation.goBack();
             })
             .catch(error => {
@@ -54,21 +55,22 @@ export const checkListCreate = ({ title, items }) => {
     };
 };
 
-// export const checkListFetch = () => {
-//     const { currentUser } = firebase.auth();
+export const checkListFetch = () => {
+    const { currentUser } = firebase.auth();
 
-//     return dispatch => {
-//         firebase
-//             .database()
-//             .ref(`/users/${currentUser.uid}/CHECKLIST`)
-//             .on('value', snapshot => {
-//                 dispatch({
-//                     type: CHECKLISTS_FETCH_SUCCESS,
-//                     payload: snapshot.val(),
-//                 });
-//             });
-//     };
-// };
+    return dispatch => {
+        firebase
+            .database()
+            .ref('User' + currentUser.uid + '/')
+            .on('value', snapshot => {
+                console.log('fetch_value', snapshot.val());
+                dispatch({
+                    type: CHECKLISTS_FETCH_SUCCESS,
+                    payload: snapshot.val(),
+                });
+            });
+    };
+};
 
 // export const checkListSave = ({ name, phone, shift, uid }) => {
 //     const { currentUser } = firebase.auth();
