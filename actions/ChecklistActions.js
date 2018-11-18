@@ -6,6 +6,7 @@ import {
     CHECKLIST_ADD_ITEM,
     CHECKLIST_CREATE,
     CHECKLISTS_FETCH_SUCCESS,
+    CHECKLIST_SAVE_SUCCESS,
 } from '../constant';
 
 export const checkListUpdate = ({ prop, value }) => {
@@ -61,7 +62,7 @@ export const checkListFetch = () => {
     return dispatch => {
         firebase
             .database()
-            .ref('User' + currentUser.uid + '/')
+            .ref(`/User${currentUser.uid}/`)
             .on('value', snapshot => {
                 console.log('fetch_value', snapshot.val());
                 dispatch({
@@ -72,31 +73,35 @@ export const checkListFetch = () => {
     };
 };
 
-// export const checkListSave = ({ name, phone, shift, uid }) => {
-//     const { currentUser } = firebase.auth();
+export const checkListSave = ({ title, items, uid }) => {
+    const { currentUser } = firebase.auth();
+    console.log('Checklist Save', title, items, uid);
 
-//     return dispatch => {
-//         firebase
-//             .database()
-//             .ref(`/users/${currentUser.uid}/CHECKLIST/${uid}`)
-//             .set({ name, phone, shift })
-//             .then(() => {
-//                 dispatch({ type: CHECKLIST_SAVE_SUCCESS });
-//                 Actions.checkList({ type: 'reset' });
-//             });
-//     };
-// };
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`/User${currentUser.uid}/${uid}`)
+            .set({ title, items })
+            .then(() => {
+                console.log('checklist save');
+                dispatch({ type: CHECKLIST_SAVE_SUCCESS });
+                Actions.checkList({ type: 'reset' });
+            });
+    };
+};
 
-// export const checkListDelete = ({ uid }) => {
-//     const { currentUser } = firebase.auth();
+export const checkListDelete = ({ uid }) => {
+    const { currentUser } = firebase.auth();
 
-//     return () => {
-//         firebase
-//             .database()
-//             .ref(`/users/${currentUser.uid}/CHECKLIST/${uid}`)
-//             .remove()
-//             .then(() => {
-//                 Actions.CHECKLISTList({ type: 'reset' });
-//             });
-//     };
-// };
+    return () => {
+        firebase
+            .database()
+            .ref(`/User${currentUser.uid}/${uid}`)
+            .remove()
+            .then(() => {
+                console.log('checklist delete');
+                //dispatch({ type: CHECKLIST_SAVE_SUCCESS });
+                Actions.checkList({ type: 'reset' });
+            });
+    };
+};
