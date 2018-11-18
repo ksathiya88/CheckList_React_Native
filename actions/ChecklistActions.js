@@ -7,6 +7,7 @@ import {
     CHECKLIST_CREATE,
     CHECKLISTS_FETCH_SUCCESS,
     CHECKLIST_SAVE_SUCCESS,
+    CHECKLIST_CHECKED_UPDATE,
 } from '../constant';
 
 export const checkListUpdate = ({ prop, value }) => {
@@ -14,6 +15,14 @@ export const checkListUpdate = ({ prop, value }) => {
     return {
         type: CHECKLIST_UPDATE,
         payload: { prop, value },
+    };
+};
+
+export const checkListCheckedUpdate = ({ prop, index }) => {
+    console.log('inside item checked Update ', prop, index);
+    return {
+        type: CHECKLIST_CHECKED_UPDATE,
+        payload: { prop, index },
     };
 };
 

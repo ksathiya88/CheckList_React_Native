@@ -71,9 +71,9 @@ const mapStateToProps = state => {
     const checklists = _.map(state.checkLists, (val, uid) => {
         return { ...val, uid };
     });
-
+    const { selectedOption } = state.radio;
     console.log('checkLists', checklists);
-    return { checklists };
+    return { checklists, selectedOption };
 };
 
 export default connect(

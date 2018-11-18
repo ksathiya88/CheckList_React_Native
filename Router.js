@@ -4,6 +4,7 @@ import LoginForm from './components/loginForm';
 import App from './App';
 import ChecklistCreate from './components/CheckListCreate';
 import ChecklistEdit from './components/CheckListEdit';
+import ChecklistUse from './components/CheckListUse';
 //import HelloThere from './HelloThere';
 
 const RouterComponent = () => {
@@ -21,6 +22,7 @@ const RouterComponent = () => {
                 />
                 <Scene key="checklistCreate" component={ChecklistCreate} />
                 <Scene key="checklistEdit" component={ChecklistEdit} />
+                <Scene key="checklistUse" component={ChecklistUse} />
             </Scene>
         </Router>
     );
