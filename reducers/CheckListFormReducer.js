@@ -6,8 +6,9 @@ import {
     CHECKLIST_ADD_ITEM,
 } from '../constant';
 
+const item = { checked: false, value: '' };
 const INITIAL_STATE = {
-    items: [],
+    items: [item],
     title: '',
 };
 
@@ -23,14 +24,14 @@ export default (state = INITIAL_STATE, action) => {
             console.log('checklistitem update', state, action);
             stateTemp = { ...state };
             itemsCopy = state.items.slice();
-            itemsCopy[action.payload.index] = action.payload.prop;
+            itemsCopy[action.payload.index].value = action.payload.prop;
             console.log(stateTemp);
             return { ...stateTemp, items: itemsCopy };
         case CHECKLIST_ADD_ITEM:
             console.log('checklistadd_item', state, action);
             stateTemp = { ...state };
             itemsCopy = state.items.slice();
-            itemsCopy.push('');
+            itemsCopy.push({ ...item });
             console.log(stateTemp);
             return { ...stateTemp, items: itemsCopy };
         case CHECKLIST_CREATE:

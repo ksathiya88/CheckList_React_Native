@@ -26,7 +26,7 @@ class CheckListForm extends Component {
                     <CardSection>
                         <Input
                             placeholder="CheckList Item"
-                            value={item}
+                            value={item.value}
                             onChangeText={text =>
                                 this.props.checkListItemsUpdate({
                                     prop: text,

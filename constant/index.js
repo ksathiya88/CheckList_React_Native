@@ -12,3 +12,4 @@ export const CHECKLIST_ADD_ITEM = 'checklist_add_item';
 export const CHECKLIST_CREATE = 'checklist_create';
 export const CHECKLISTS_FETCH_SUCCESS = 'checklist_fetch_success';
 export const CHECKLIST_SAVE_SUCCESS = 'checklist_save_success';
+export const RADIO_SET = 'radio_set';

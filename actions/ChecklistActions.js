@@ -38,7 +38,7 @@ export const checkListCreate = ({ title, items }) => {
     return dispatch => {
         const newRef = firebase
             .database()
-            .ref('User' + currentUser.uid + '/')
+            .ref(`user/${currentUser.uid}/checklists`)
             .push();
         newRef
             .set({ title, items })
@@ -62,7 +62,7 @@ export const checkListFetch = () => {
     return dispatch => {
         firebase
             .database()
-            .ref(`/User${currentUser.uid}/`)
+            .ref(`/user/${currentUser.uid}/checklists`)
             .on('value', snapshot => {
                 console.log('fetch_value', snapshot.val());
                 dispatch({
@@ -80,7 +80,7 @@ export const checkListSave = ({ title, items, uid }) => {
     return dispatch => {
         firebase
             .database()
-            .ref(`/User${currentUser.uid}/${uid}`)
+            .ref(`/user/${currentUser.uid}/checklists/${uid}`)
             .set({ title, items })
             .then(() => {
                 console.log('checklist save');
@@ -96,7 +96,7 @@ export const checkListDelete = ({ uid }) => {
     return () => {
         firebase
             .database()
-            .ref(`/User${currentUser.uid}/${uid}`)
+            .ref(`/user/${currentUser.uid}/checklists/${uid}`)
             .remove()
             .then(() => {
                 console.log('checklist delete');

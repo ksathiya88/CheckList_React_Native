@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { logout } from './actions/AuthActions';
 import { checkListFetch } from './actions/ChecklistActions';
 import ListItem from './components/ListItem';
+import RadioUseEdit from './components/RadioUseEdit';
 
 import { Card, CardSection, Button } from './common';
 //import CheckList from './components/checklist';
@@ -59,6 +60,7 @@ class App extends Component {
                     dataSource={this.dataSource}
                     renderRow={this.renderRow}
                 />
+                <RadioUseEdit />
             </View>
         );
         // return <View> {this.renderContent()} </View>;
