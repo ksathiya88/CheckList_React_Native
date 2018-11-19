@@ -6,6 +6,7 @@ import {
     checkListUpdate,
     checkListCheckedUpdate,
     checkListSave,
+    checkListReset,
 } from '../actions';
 
 class CheckListUse extends Component {
@@ -33,10 +34,32 @@ class CheckListUse extends Component {
         });
     }
 
+    onResetPress() {
+        //console.log('Reset press checklist use', items);
+        const { items } = this.props;
+        console.log('Reset press checklist use', items);
+        for (let i = 0; i < items.length; i++) {
+            console.log('items ', items[i]);
+            if (items[i]) {
+                items[i].checked = false;
+            }
+        }
+
+        this.props.checkListReset({
+            items,
+            uid: this.props.checklist.uid,
+        });
+    }
+
     render() {
-        //console.log('checklistForm--props', this.props);
+        console.log('checklistForm--props', this.props);
         return (
             <Card>
+                <CardSection>
+                    <Button onPress={this.onResetPress.bind(this)}>
+                        Reset
+                    </Button>
+                </CardSection>
                 <CardSection>
                     <Input
                         placeholder="CheckList Title"
@@ -83,11 +106,11 @@ const styles = {
 
 const mapStateToProps = state => {
     const { title, items } = state.checkListForm;
-
+    console.log('checklistUse', title, items);
     return { title, items };
 };
 
 export default connect(
     mapStateToProps,
-    { checkListUpdate, checkListCheckedUpdate, checkListSave }
+    { checkListUpdate, checkListCheckedUpdate, checkListSave, checkListReset }
 )(CheckListUse);

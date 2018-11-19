@@ -31,7 +31,7 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER_FAIL:
             return {
                 ...state,
-                error: 'Authenticattion Failed.',
+                error: 'Authentication Failed.',
                 password: '',
                 loading: false,
             };

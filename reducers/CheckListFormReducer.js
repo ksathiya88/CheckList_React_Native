@@ -5,6 +5,7 @@ import {
     CHECKLIST_ITEM_UPDATE,
     CHECKLIST_ADD_ITEM,
     CHECKLIST_CHECKED_UPDATE,
+    CHECKLIST_RESET_UPDATE,
 } from '../constant';
 
 const item = { checked: false, value: '' };
@@ -18,6 +19,11 @@ export default (state = INITIAL_STATE, action) => {
     let itemsCopy = [];
     console.log('checklistform', state, action);
     switch (action.type) {
+        case CHECKLIST_RESET_UPDATE:
+            console.log('checklist reset update', state, action);
+            stateTemp = { ...state };
+            itemsCopy = action.payload.slice();
+            return { ...stateTemp, items: itemsCopy };
         case CHECKLIST_CHECKED_UPDATE:
             console.log('checklist checked update', state, action);
             stateTemp = { ...state };

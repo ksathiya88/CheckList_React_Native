@@ -14,3 +14,4 @@ export const CHECKLISTS_FETCH_SUCCESS = 'checklist_fetch_success';
 export const CHECKLIST_SAVE_SUCCESS = 'checklist_save_success';
 export const RADIO_SET = 'radio_set';
 export const CHECKLIST_CHECKED_UPDATE = 'checklist_checked_update';
+export const CHECKLIST_RESET_UPDATE = 'checklist_reset_update';

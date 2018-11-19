@@ -8,6 +8,7 @@ import {
     CHECKLISTS_FETCH_SUCCESS,
     CHECKLIST_SAVE_SUCCESS,
     CHECKLIST_CHECKED_UPDATE,
+    CHECKLIST_RESET_UPDATE,
 } from '../constant';
 
 export const checkListUpdate = ({ prop, value }) => {
@@ -96,6 +97,14 @@ export const checkListSave = ({ title, items, uid }) => {
                 dispatch({ type: CHECKLIST_SAVE_SUCCESS });
                 Actions.checkList({ type: 'reset' });
             });
+    };
+};
+
+export const checkListReset = ({ items, uid }) => {
+    console.log('Checklist reset', items, uid);
+    return {
+        type: CHECKLIST_RESET_UPDATE,
+        payload: items,
     };
 };
 
