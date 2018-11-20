@@ -20,9 +20,21 @@ const RouterComponent = () => {
                     title="Checklist"
                     intial
                 />
-                <Scene key="checklistCreate" component={ChecklistCreate} />
-                <Scene key="checklistEdit" component={ChecklistEdit} />
-                <Scene key="checklistUse" component={ChecklistUse} />
+                <Scene
+                    key="checklistCreate"
+                    component={ChecklistCreate}
+                    title="Create Checklist"
+                />
+                <Scene
+                    key="checklistEdit"
+                    component={ChecklistEdit}
+                    title="Edit Checklist"
+                />
+                <Scene
+                    key="checklistUse"
+                    component={ChecklistUse}
+                    title="Use Checklist"
+                />
             </Scene>
         </Router>
     );

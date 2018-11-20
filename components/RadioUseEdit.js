@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableWithoutFeedback } from 'react-native';
-import { RadioButtons } from 'react-native-radio-buttons';
+import { SegmentedControls } from 'react-native-radio-buttons';
 import { connect } from 'react-redux';
 import { radioSet } from '../actions';
 
@@ -30,12 +30,10 @@ class RadioUseEdit extends Component {
 
         return (
             <View style={{ margin: 50 }}>
-                <RadioButtons
+                <SegmentedControls
                     options={options}
                     onSelection={setSelectedOption.bind(this)}
                     selectedOption={this.props.selectedOption}
-                    renderOption={renderOption}
-                    renderContainer={renderContainer}
                 />
                 <Text>Selected option: {this.props.selectedOption}</Text>
             </View>

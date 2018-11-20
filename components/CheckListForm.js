@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import {
     checkListUpdate,
@@ -13,7 +13,7 @@ class CheckListForm extends Component {
         //console.log('checklistForm--props', this.props);
         return (
             <Card>
-                <CardSection>
+                <View style={styles.containerStyle}>
                     <Input
                         placeholder="CheckList Title"
                         value={this.props.title}
@@ -21,9 +21,9 @@ class CheckListForm extends Component {
                             this.props.checkListUpdate({ prop: 'title', value })
                         }
                     />
-                </CardSection>
+                </View>
                 {this.props.items.map((item, index) => (
-                    <CardSection>
+                    <View style={styles.itemStyle}>
                         <Input
                             placeholder="CheckList Item"
                             value={item.value}
@@ -34,7 +34,7 @@ class CheckListForm extends Component {
                                 })
                             }
                         />
-                    </CardSection>
+                    </View>
                 ))}
                 <CardSection>
                     <Button onPress={() => this.props.checkListAddItems()}>
@@ -50,6 +50,30 @@ const styles = {
     pickerTextStyle: {
         fontSize: 18,
         paddingLeft: 20,
+    },
+    containerStyle: {
+        justifyContent: 'center',
+        backgroundColor: '#33ccff',
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 7,
+        borderColor: '#007aff',
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginRight: 10,
+        position: 'relative',
+    },
+    itemStyle: {
+        justifyContent: 'center',
+        backgroundColor: '#ffffcc',
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 7,
+        borderColor: '#007aff',
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginRight: 10,
+        position: 'relative',
     },
 };
 

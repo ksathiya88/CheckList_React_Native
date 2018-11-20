@@ -22,10 +22,8 @@ class ListItem extends Component {
 
         return (
             <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
-                <View>
-                    <CardSection>
-                        <Text style={styles.titleStyle}>{title}</Text>
-                    </CardSection>
+                <View style={styles.containerStyle}>
+                    <Text style={styles.titleStyle}>{title}</Text>
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -36,6 +34,19 @@ const styles = {
     titleStyle: {
         fontSize: 18,
         paddingLeft: 15,
+        fontWeight: '600',
+    },
+    containerStyle: {
+        justifyContent: 'center',
+        backgroundColor: '#ffffcc',
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 7,
+        borderColor: '#007aff',
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginRight: 10,
+        position: 'relative',
     },
 };
 
