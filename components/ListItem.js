@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { CardSection } from '../common';
 
 class ListItem extends Component {
     onRowPress() {
         console.log('Row Press');
         if (this.props.selectedOption === 'USE') {
             console.log('Use ---');
-            Actions.checklistUse({ checklist: this.props.checklist });
+            Actions.checklistUse({
+                checklist: this.props.checklist,
+            });
         } else {
             console.log('Edit ---');
-            Actions.checklistEdit({ checklist: this.props.checklist });
+            Actions.checklistEdit({
+                checklist: this.props.checklist,
+            });
         }
     }
 

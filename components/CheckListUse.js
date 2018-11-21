@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { View, TextInput } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { CardSection, Input, Card, Button } from '../common';
 import {
@@ -67,25 +68,28 @@ class CheckListUse extends Component {
                     />
                 </CardSection>
                 {this.props.items.map((item, index) => (
-                    <CardSection>
-                        <CheckBox
-                            title="Done"
-                            checkedIcon="dot-circle-o"
-                            uncheckedIcon="circle-o"
-                            checked={item.checked}
-                            onPress={text => {
-                                console.log('checked111', text, index);
-                                this.props.checkListCheckedUpdate({
-                                    prop: !item.checked,
-                                    index,
-                                });
-                            }}
-                        />
-                        <Input
+                    <View style={styles.containerStyle}>
+                        <View style={styles.labelStyle}>
+                            <CheckBox
+                                title="Done"
+                                checkedIcon="dot-circle-o"
+                                uncheckedIcon="circle-o"
+                                checked={item.checked}
+                                onPress={text => {
+                                    console.log('checked111', text, index);
+                                    this.props.checkListCheckedUpdate({
+                                        prop: !item.checked,
+                                        index,
+                                    });
+                                }}
+                            />
+                        </View>
+                        <TextInput
                             placeholder="CheckList Item"
+                            style={styles.inputStyle}
                             value={item.value}
                         />
-                    </CardSection>
+                    </View>
                 ))}
                 <CardSection>
                     <Button onPress={this.onButtonPress.bind(this)}>
@@ -101,6 +105,23 @@ const styles = {
     pickerTextStyle: {
         fontSize: 18,
         paddingLeft: 20,
+    },
+    labelStyle: {
+        borderWidth: 3,
+        borderColor: '#ff66ff',
+    },
+    inputStyle: {
+        color: '#000',
+        fontSize: 18,
+    },
+    containerStyle: {
+        borderWidth: 1,
+        padding: 5,
+        borderColor: '#007aff',
+        backgroundColor: '#fff',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        position: 'relative',
     },
 };
 

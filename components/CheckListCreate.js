@@ -5,6 +5,18 @@ import { Card, CardSection, Button } from '../common';
 import CheckListForm from './CheckListForm';
 
 class CheckListCreate extends Component {
+    componentWillMount() {
+        this.props.checkListUpdate({
+            prop: 'title',
+            value: '',
+        });
+
+        this.props.checkListUpdate({
+            prop: 'items',
+            value: [{ checked: false, value: '' }],
+        });
+    }
+
     onButtonPress() {
         console.log('Button press');
         const { title, items } = this.props;

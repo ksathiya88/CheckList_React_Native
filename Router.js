@@ -21,6 +21,7 @@ const RouterComponent = () => {
                     intial
                 />
                 <Scene
+                    onL
                     key="checklistCreate"
                     component={ChecklistCreate}
                     title="Create Checklist"
