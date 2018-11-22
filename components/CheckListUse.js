@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, TextInput } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-import { CardSection, Input, Card, Button } from '../common';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {View, TextInput} from 'react-native';
+import {CheckBox} from 'react-native-elements';
+import {CardSection, Input, Card, Button} from '../common';
 import {
     checkListUpdate,
     checkListCheckedUpdate,
     checkListSave,
     checkListReset,
 } from '../actions';
+
 
 class CheckListUse extends Component {
     componentWillMount() {
@@ -26,7 +27,7 @@ class CheckListUse extends Component {
 
     onButtonPress() {
         console.log('Button press checklist use');
-        const { title, items } = this.props;
+        const {title, items} = this.props;
 
         this.props.checkListSave({
             title,
@@ -37,7 +38,7 @@ class CheckListUse extends Component {
 
     onResetPress() {
         //console.log('Reset press checklist use', items);
-        const { items } = this.props;
+        const {items} = this.props;
         console.log('Reset press checklist use', items);
         for (let i = 0; i < items.length; i++) {
             console.log('items ', items[i]);
@@ -68,7 +69,7 @@ class CheckListUse extends Component {
                     />
                 </CardSection>
                 {this.props.items.map((item, index) => (
-                    <View style={styles.containerStyle}>
+                    <CardSection>
                         <View style={styles.labelStyle}>
                             <CheckBox
                                 title="Done"
@@ -89,7 +90,7 @@ class CheckListUse extends Component {
                             style={styles.inputStyle}
                             value={item.value}
                         />
-                    </View>
+                    </CardSection>
                 ))}
                 <CardSection>
                     <Button onPress={this.onButtonPress.bind(this)}>
@@ -107,15 +108,18 @@ const styles = {
         paddingLeft: 20,
     },
     labelStyle: {
-        borderWidth: 3,
-        borderColor: '#ff66ff',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#007aff',
     },
     inputStyle: {
-        color: '#000',
+        color: '#007aff',
         fontSize: 18,
+        paddingLeft: 20,
     },
     containerStyle: {
         borderWidth: 1,
+        borderRadius: 5,
         padding: 5,
         borderColor: '#007aff',
         backgroundColor: '#fff',
@@ -126,12 +130,12 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { title, items } = state.checkListForm;
+    const {title, items} = state.checkListForm;
     console.log('checklistUse', title, items);
-    return { title, items };
+    return {title, items};
 };
 
 export default connect(
     mapStateToProps,
-    { checkListUpdate, checkListCheckedUpdate, checkListSave, checkListReset }
+    {checkListUpdate, checkListCheckedUpdate, checkListSave, checkListReset}
 )(CheckListUse);

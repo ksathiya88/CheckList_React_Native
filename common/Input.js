@@ -27,7 +27,7 @@ const Input = ({
 
 const styles = {
     inputStyle: {
-        color: '#000',
+        color: '#007aff',
         paddingRight: 5,
         paddingLeft: 5,
         fontSize: 18,
