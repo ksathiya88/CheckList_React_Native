@@ -1,10 +1,32 @@
-import React, { Component } from 'react';
-import { Text } from 'react-native';
-import { connect } from 'react-redux';
-import { setUser, setPassword, loginUser } from '../actions/AuthActions';
-import { Card, CardSection, Input, Button, Spinner } from '../common';
+import React, {Component} from 'react';
+import {Text, View} from 'react-native';
+import {ButtonGroup} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {setUser, setPassword, loginUser, updateIndex, registerUser, closeModal} from '../actions/AuthActions';
+import {Card, CardSection, Input, Spinner} from '../common';
+import {DisplayModal} from "../common/DisplayModal";
 
 class LoginForm extends Component {
+
+    updateIndex(selectedIndex) {
+        if (this.props.selectedIndex == selectedIndex) {
+            const {email, password} = this.props;
+            // login
+            if (selectedIndex === 0) {
+
+                console.log('Email_update_index ', email, password);
+                this.props.loginUser(email, password);
+                // register
+            } else {
+                this.props.registerUser(email, password);
+            }
+
+        } else {
+            console.log("updateIndex", selectedIndex);
+            this.props.updateIndex(selectedIndex);
+        }
+    }
+
     onEmailChange(text) {
         this.props.setUser(text);
     }
@@ -14,18 +36,37 @@ class LoginForm extends Component {
     }
 
     onButtonPress() {
-        const { email, password } = this.props;
+        const {email, password} = this.props;
         console.log('Email', email, password);
         this.props.loginUser(email, password);
     }
 
+    moveToRegister() {
+        const {email, password} = this.props;
+        console.log('Email', email, password);
+        this.props.moveToRegister();
+    }
+
+    onAccept() {
+        console.log("close Modal");
+        this.props.closeModal();
+    }
+
     renderButton() {
         if (this.props.loading) {
-            return <Spinner size="large" />;
+            return <Spinner size="large"/>;
         }
 
-        return <Button onPress={this.onButtonPress.bind(this)}>Login</Button>;
+        return (<ButtonGroup
+                onPress={this.updateIndex.bind(this)}
+                selectedIndex={this.props.selectedIndex}
+                containerStyle={{borderRadius: 7}}
+                containerBorderRadius={20}
+                buttons={["LOGIN", "REGISTER"]}
+            />
+        );
     }
+
 
     render() {
         console.log('props', this.props);
@@ -52,7 +93,13 @@ class LoginForm extends Component {
 
                 <Text style={styles.errorTextStyle}>{this.props.error}</Text>
 
-                <CardSection>{this.renderButton()}</CardSection>
+                <DisplayModal
+                    visible={this.props.displayModal}
+                    onAccept={this.onAccept.bind(this)}
+                >
+                    Registration Succeded.Please login
+                </DisplayModal>
+                {this.renderButton()}
             </Card>
         );
     }
@@ -66,9 +113,9 @@ const styles = {
     },
 };
 
-const mapStateToProps = ({ auth }) => {
-    const { email, password, error, loading } = auth;
-    return { email, password, error, loading };
+const mapStateToProps = ({auth}) => {
+    const {email, password, error, loading, selectedIndex, displayModal} = auth;
+    return {email, password, error, loading, selectedIndex, displayModal};
 };
 
 export default connect(
@@ -77,5 +124,8 @@ export default connect(
         setUser,
         setPassword,
         loginUser,
+        updateIndex,
+        registerUser,
+        closeModal
     }
 )(LoginForm);

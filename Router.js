@@ -5,13 +5,15 @@ import App from './App';
 import ChecklistCreate from './components/CheckListCreate';
 import ChecklistEdit from './components/CheckListEdit';
 import ChecklistUse from './components/CheckListUse';
+import RegisterForm from "./components/RegisterForm";
 //import HelloThere from './HelloThere';
 
 const RouterComponent = () => {
     return (
         <Router sceneStyle={{ paddingTop: 65 }}>
             <Scene key="root">
-                <Scene key="login" component={LoginForm} title="Please Login" />
+                <Scene key="login" component={LoginForm} title="Login" />
+                <Scene key="register" component={RegisterForm} title="Register" />
                 <Scene
                     key="checkList"
                     component={App}
@@ -21,7 +23,6 @@ const RouterComponent = () => {
                     intial
                 />
                 <Scene
-                    onL
                     key="checklistCreate"
                     component={ChecklistCreate}
                     title="Create Checklist"

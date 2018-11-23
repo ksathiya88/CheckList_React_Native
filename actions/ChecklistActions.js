@@ -11,6 +11,10 @@ import {
     CHECKLIST_RESET_UPDATE,
 } from '../constant';
 
+export const moveToRegister = () =>{
+    Actions.register();
+};
+
 export const checkListUpdate = ({ prop, value }) => {
     console.log('inside', prop, value);
     return {

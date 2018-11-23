@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 import {
     SET_USER,
     SET_PASSWORD,
@@ -7,7 +7,8 @@ import {
     LOGIN_USER,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
-    LOGOUT,
+    LOGOUT, UPDATE_INDEX,
+    LOGIN_REGISTER_FAIL, INTIAL_FORM_STATE, CLOSE_MODAL,
 } from '../constant';
 
 export const setUser = username => ({
@@ -15,27 +16,45 @@ export const setUser = username => ({
     payload: username,
 });
 
+export const closeModal = () => ({
+    type: CLOSE_MODAL
+});
+
+export const updateIndex = index => ({
+    type: UPDATE_INDEX,
+    payload: index
+});
+
+
 export const setPassword = password => ({
     type: SET_PASSWORD,
     payload: password,
 });
 
+export const registerUser = (username, password) => {
+    return dispatch => {
+        dispatch({type: LOGIN_USER});
+        console.log('Register', username, password);
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(username, password)
+            .then(user => loginRegisterSuccess(dispatch))
+            .catch(error => loginRegisterFail(dispatch, error));
+    };
+};
+
+
 export const loginUser = (username, password) => {
     return dispatch => {
-        dispatch({ type: LOGIN_USER });
+        dispatch({type: LOGIN_USER});
         console.log('EmailActions', username, password);
         firebase
             .auth()
             .signInWithEmailAndPassword(username, password)
             .then(user => loginUserSuccess(dispatch, user))
             .catch(error => {
-                console.log(error);
-
-                firebase
-                    .auth()
-                    .createUserWithEmailAndPassword(username, password)
-                    .then(user => loginUserSuccess(dispatch, user))
-                    .catch(() => loginUserFail(dispatch));
+                console.log("UserFail", error);
+                loginUserFail(dispatch, error);
             });
     };
 };
@@ -44,8 +63,8 @@ export const setLoading = () => ({
     type: SET_LOADING,
 });
 
-const loginUserFail = dispatch => {
-    dispatch({ type: LOGIN_USER_FAIL });
+const loginUserFail = (dispatch, error) => {
+    dispatch({type: LOGIN_USER_FAIL, payload: error});
 };
 
 const loginUserSuccess = (dispatch, user) => {
@@ -55,6 +74,15 @@ const loginUserSuccess = (dispatch, user) => {
     });
 
     Actions.reset('checkList');
+};
+
+const loginRegisterSuccess = (dispatch) => {
+    dispatch({type: INTIAL_FORM_STATE});
+};
+
+const loginRegisterFail = (dispatch, error) => {
+    console.log("RegisterFail", error);
+    dispatch({type: LOGIN_REGISTER_FAIL, payload: error});
 };
 
 export const logout = () => {
