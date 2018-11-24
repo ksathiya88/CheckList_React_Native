@@ -1,31 +1,26 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import {ButtonGroup} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {setUser, setPassword, loginUser, updateIndex, registerUser, closeModal} from '../actions/AuthActions';
+import {
+    setUser,
+    setPassword,
+    loginUser,
+    updateIndex,
+    registerUser,
+    closeModal,
+    checkLoggedIn
+} from '../actions/AuthActions';
 import {Card, CardSection, Input, Spinner} from '../common';
 import {DisplayModal} from "../common/DisplayModal";
 
 class LoginForm extends Component {
 
-    updateIndex(selectedIndex) {
-        if (this.props.selectedIndex == selectedIndex) {
-            const {email, password} = this.props;
-            // login
-            if (selectedIndex === 0) {
-
-                console.log('Email_update_index ', email, password);
-                this.props.loginUser(email, password);
-                // register
-            } else {
-                this.props.registerUser(email, password);
-            }
-
-        } else {
-            console.log("updateIndex", selectedIndex);
-            this.props.updateIndex(selectedIndex);
-        }
+    componentWillMount() {
+        console.log("componentWillMount Called");
+        this.props.checkLoggedIn();
     }
+
 
     onEmailChange(text) {
         this.props.setUser(text);
@@ -41,16 +36,33 @@ class LoginForm extends Component {
         this.props.loginUser(email, password);
     }
 
+
+    onAccept() {
+        console.log("close Modal");
+        this.props.closeModal();
+    }
+
+    updateIndex(selectedIndex) {
+        if (this.props.selectedIndex == selectedIndex) {
+            const {email, password} = this.props;
+            // login
+            if (selectedIndex === 0) {
+                this.props.loginUser(email, password);
+            } else {
+                this.props.registerUser(email, password);
+            }
+
+        } else {
+            this.props.updateIndex(selectedIndex);
+        }
+    }
+
     moveToRegister() {
         const {email, password} = this.props;
         console.log('Email', email, password);
         this.props.moveToRegister();
     }
 
-    onAccept() {
-        console.log("close Modal");
-        this.props.closeModal();
-    }
 
     renderButton() {
         if (this.props.loading) {
@@ -126,6 +138,7 @@ export default connect(
         loginUser,
         updateIndex,
         registerUser,
-        closeModal
+        closeModal,
+        checkLoggedIn
     }
 )(LoginForm);

@@ -7,7 +7,8 @@ import {
     LOGIN_USER_SUCCESS,
     LOGOUT, UPDATE_INDEX,
     LOGIN_REGISTER_FAIL,
-    INTIAL_FORM_STATE, CLOSE_MODAL
+    INTIAL_FORM_STATE, CLOSE_MODAL,
+    INTIAL_LOGIN_STATE
 } from '../constant';
 
 const INITIAL_STATE = {
@@ -15,9 +16,10 @@ const INITIAL_STATE = {
     password: '',
     error: '',
     loading: false,
-    loggedIn: true,
+    loggedIn: false,
     selectedIndex: 0,
-    displayModal: false
+    displayModal: false,
+    title: 'Login'
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,14 +30,27 @@ export default (state = INITIAL_STATE, action) => {
                 password: '',
                 error: '',
                 loading: false,
-                loggedIn: true,
+                loggedIn: false,
                 selectedIndex: 0,
-                displayModal: true
+                displayModal: true,
+                title: "Login"
+
+            };
+        case INTIAL_LOGIN_STATE:
+            return {
+                ...state,
+                loading: false,
+                loggedIn: false,
+                displayModal: false,
             };
         case CLOSE_MODAL:
             return {...state, displayModal: false};
         case UPDATE_INDEX:
-            return {...INITIAL_STATE, selectedIndex: action.payload};
+            if (action.payload === 0) {
+                return {...INITIAL_STATE, selectedIndex: action.payload, title: "Login"};
+            } else {
+                return {...INITIAL_STATE, selectedIndex: action.payload, title: "Register"};
+            }
         case SET_USER:
             return {...state, email: action.payload};
         case SET_PASSWORD:
@@ -45,7 +60,7 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER:
             return {...state, loading: true, error: ''};
         case LOGIN_USER_SUCCESS:
-            return {...state, ...INITIAL_STATE, user: action.payload};
+            return {...state, loading: false, loggedIn: true, user: action.payload};
         case LOGIN_USER_FAIL:
             return {
                 ...state,
