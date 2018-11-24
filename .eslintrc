@@ -1,8 +1,9 @@
 {
-    "extends": "rallycoding",
-    "eslint.autoFixOnSave": true,
-    "rules": {
-        "arrow-body-style": 0,
-        "space-before-function-paren": 0
-    }
+  "extends": "rallycoding",
+  "eslint.autoFixOnSave": true,
+  "rules": {
+    "arrow-body-style": 0,
+    "space-before-function-paren": 0,
+    "quotes": 0
+  }
 }

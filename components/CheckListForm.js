@@ -13,7 +13,8 @@ class CheckListForm extends Component {
         //console.log('checklistForm--props', this.props);
         return (
             <Card>
-                <View style={styles.containerStyle}>
+                <CardSection>
+                {/*<View style={styles.containerStyle}>*/}
                     <Input
                         placeholder="CheckList Title"
                         value={this.props.title}
@@ -21,7 +22,8 @@ class CheckListForm extends Component {
                             this.props.checkListUpdate({ prop: 'title', value })
                         }
                     />
-                </View>
+                </CardSection>
+                {/*</View>*/}
                 {this.props.items.map((item, index) => (
                     <View style={styles.itemStyle}>
                         <Input
@@ -65,7 +67,7 @@ const styles = {
     },
     itemStyle: {
         justifyContent: 'center',
-        backgroundColor: '#ffffcc',
+        backgroundColor: '#ffffff',
         borderRadius: 5,
         borderWidth: 1,
         padding: 7,

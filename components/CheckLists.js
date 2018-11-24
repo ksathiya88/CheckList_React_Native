@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, ListView } from 'react-native';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { logout } from './actions/AuthActions';
-import { checkListFetch } from './actions/ChecklistActions';
-import ListItem from './components/ListItem';
-import RadioUseEdit from './components/RadioUseEdit';
+import { logout } from '../actions/AuthActions';
+import { checkListFetch } from '../actions/ChecklistActions';
+import ListItem from './ListItem';
+import RadioUseEdit from './RadioUseEdit';
 
-import { Card, CardSection, Button } from './common';
+import { Card, CardSection, Button } from '../common/index';
 //import CheckList from './components/checklist';
 
-class App extends Component {
+class CheckLists extends Component {
     componentWillMount() {
         this.props.checkListFetch();
 
@@ -79,4 +79,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     { logout, checkListFetch }
-)(App);
+)(CheckLists);

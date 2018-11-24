@@ -10,6 +10,7 @@ export const UPDATE_INDEX = 'update_index';
 export const LOGIN_REGISTER_SUCCESS = 'login_register_success';
 export const LOGIN_REGISTER_FAIL = 'login_register_fail';
 export const INTIAL_FORM_STATE = 'intial_state';
+export const INTIAL_LOGIN_STATE = 'intial_login_state';
 
 export const CHECKLIST_UPDATE = 'checklist_update';
 export const CHECKLIST_ITEM_UPDATE = 'checklist_item_update';

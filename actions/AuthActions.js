@@ -8,7 +8,7 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     LOGOUT, UPDATE_INDEX,
-    LOGIN_REGISTER_FAIL, INTIAL_FORM_STATE, CLOSE_MODAL,
+    LOGIN_REGISTER_FAIL, INTIAL_FORM_STATE, CLOSE_MODAL, INTIAL_LOGIN_STATE,
 } from '../constant';
 
 export const setUser = username => ({
@@ -100,3 +100,22 @@ export const logout = () => {
             });
     };
 };
+
+export const checkLoggedIn = () => {
+    return dispatch => {
+        dispatch({type: LOGIN_USER});
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                dispatch({
+                    type: LOGIN_USER_SUCCESS,
+                    payload: user,
+                });
+                Actions.reset('checkList');
+            } else {
+                dispatch({
+                    type: INTIAL_LOGIN_STATE
+                });
+            }
+        });
+    };
+}
