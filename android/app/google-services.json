@@ -1,0 +1,42 @@
+F{
+  "project_info": {
+    "project_number": "921785370927",
+    "firebase_url": "https://checklistapp-cd1b7.firebaseio.com",
+    "project_id": "checklistapp-cd1b7",
+    "storage_bucket": "checklistapp-cd1b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921785370927:android:7e9563ed4316f6e5",
+        "android_client_info": {
+          "package_name": "com.daily.checklist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921785370927-k929rj45cvhdlpgamt43r2m8tprckkol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyIOm6B-C-0ElYta-prW9Tj1LRBPc2Qls"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
