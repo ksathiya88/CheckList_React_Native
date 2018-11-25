@@ -32,4 +32,4 @@ class Index extends Component {
     }
 }
 
-AppRegistry.registerComponent('albums', () => Index);
+AppRegistry.registerComponent('checklist', () => Index);

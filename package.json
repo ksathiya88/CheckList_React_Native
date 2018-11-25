@@ -1,5 +1,5 @@
 {
-    "name": "albums",
+    "name": "checklist",
     "version": "0.0.1",
     "private": true,
     "scripts": {
@@ -16,7 +16,6 @@
         "react-native-radio-buttons": "^1.0.0",
         "react-native-router-flux": "^4.0.5",
         "react-native-vector-icons": "^6.1.0",
-        "react-navigation": "^2.17.0",
         "react-redux": "^5.1.0",
         "redux": "^4.0.1",
         "redux-thunk": "^2.3.0"

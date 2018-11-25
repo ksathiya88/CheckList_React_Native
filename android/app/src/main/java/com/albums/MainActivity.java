@@ -1,4 +1,4 @@
-package com.albums;
+package com.karsoft.checklist;
 
 import com.facebook.react.ReactActivity;
 
