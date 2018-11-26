@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
 import {
     CHECKLIST_UPDATE,
@@ -11,7 +11,7 @@ import {
     CHECKLIST_RESET_UPDATE,
 } from '../constant';
 
-export const moveToRegister = () =>{
+export const moveToRegister = () => {
     Actions.register();
 };
 
