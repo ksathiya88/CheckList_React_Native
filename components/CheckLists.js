@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { View, Text, ListView } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, ListView, ScrollView} from 'react-native';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-import { logout } from '../actions/AuthActions';
-import { checkListFetch } from '../actions/ChecklistActions';
+import {connect} from 'react-redux';
+import {logout} from '../actions/AuthActions';
+import {checkListFetch} from '../actions/ChecklistActions';
 import ListItem from './ListItem';
 import RadioUseEdit from './RadioUseEdit';
 
-import { Card, CardSection, Button } from '../common/index';
+import {Card, CardSection, Button} from '../common/index';
+
 //import CheckList from './components/checklist';
 
 class CheckLists extends Component {
@@ -30,7 +31,7 @@ class CheckLists extends Component {
         this.props.logout();
     }
 
-    createDataSource({ checklists }) {
+    createDataSource({checklists}) {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
         });
@@ -39,7 +40,7 @@ class CheckLists extends Component {
     }
 
     renderRow(checklist) {
-        return <ListItem checklist={checklist} />;
+        return <ListItem checklist={checklist}/>;
     }
 
     render() {
@@ -47,7 +48,7 @@ class CheckLists extends Component {
         console.log('heellloooooo2222');
 
         return (
-            <View>
+            <ScrollView>
                 <Card>
                     <CardSection>
                         <Button onPress={() => this.props.logout()}>
@@ -60,8 +61,8 @@ class CheckLists extends Component {
                     dataSource={this.dataSource}
                     renderRow={this.renderRow}
                 />
-                <RadioUseEdit />
-            </View>
+                <RadioUseEdit/>
+            </ScrollView>
         );
         // return <View> {this.renderContent()} </View>;
     }
@@ -69,14 +70,14 @@ class CheckLists extends Component {
 
 const mapStateToProps = state => {
     const checklists = _.map(state.checkLists, (val, uid) => {
-        return { ...val, uid };
+        return {...val, uid};
     });
-    const { selectedOption } = state.radio;
+    const {selectedOption} = state.radio;
     console.log('checkLists', checklists);
-    return { checklists, selectedOption };
+    return {checklists, selectedOption};
 };
 
 export default connect(
     mapStateToProps,
-    { logout, checkListFetch }
+    {logout, checkListFetch}
 )(CheckLists);

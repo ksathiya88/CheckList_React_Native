@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Scene, Actions} from 'react-native-router-flux';
+import {Router, Scene, Stack, Actions} from 'react-native-router-flux';
 import {connect} from "react-redux";
 import LoginForm from './components/loginForm';
 import CheckLists from './components/CheckLists';
@@ -10,7 +10,7 @@ import ChecklistUse from './components/CheckListUse';
 const RouterComponent = (props) => {
     console.log("Router props", props);
     return (
-        <Router sceneStyle={{paddingTop: 65}}>
+        <Router>
             <Scene key="root">
                 <Scene key="login" component={LoginForm} title={props.title}/>
                 <Scene

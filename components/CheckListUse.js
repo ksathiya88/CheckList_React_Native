@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, TextInput} from 'react-native';
-import {CheckBox, Badge} from 'react-native-elements';
+import {CheckBox} from 'react-native-elements';
 import {CardSection, Input, Card, Button} from '../common';
 import {
     checkListUpdate,
@@ -64,8 +64,8 @@ class CheckListUse extends Component {
                 </CardSection>
                 <CardSection>
                     <Input
-                    placeholder="CheckList Title"
-                    value={this.props.title}
+                        placeholder="CheckList Title"
+                        value={this.props.title}
                     />
                 </CardSection>
                 {this.props.items.map((item, index) => (
@@ -74,10 +74,9 @@ class CheckListUse extends Component {
                             <CheckBox
                                 title="Done"
                                 checked={item.checked}
-                                onPress={text => {
-                                    console.log('checked111', text, index);
+                                onPress={() => {
                                     this.props.checkListCheckedUpdate({
-                                        prop: !item.checked,
+                                        prop: !this.props.items[index].checked,
                                         index,
                                     });
                                 }}
