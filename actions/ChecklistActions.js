@@ -1,5 +1,5 @@
 import firebase from 'react-native-firebase';
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 import {
     CHECKLIST_UPDATE,
     CHECKLIST_ITEM_UPDATE,
@@ -9,34 +9,77 @@ import {
     CHECKLIST_SAVE_SUCCESS,
     CHECKLIST_CHECKED_UPDATE,
     CHECKLIST_RESET_UPDATE,
+    AUTOSAVE_TRUE,
+    AUTOSAVE_FALSE
 } from '../constant';
 
 export const moveToRegister = () => {
     Actions.register();
 };
+export const makeAutoSaveFalse = () => {
+    return {
+        type: AUTOSAVE_FALSE
+    };
+}
 
-export const checkListUpdate = ({ prop, value }) => {
+export const checkListUpdate = ({prop, value}) => {
     console.log('inside', prop, value);
     return {
         type: CHECKLIST_UPDATE,
-        payload: { prop, value },
+        payload: {prop, value},
     };
 };
 
-export const checkListCheckedUpdate = ({ prop, index }) => {
+export const checkListItemOnBlurTitle = ({prop, value, uid}) => {
+    const {currentUser} = firebase.auth();
+    console.log('inside item Blur Title Update1111 ', prop, value, uid);
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`/user/${currentUser.uid}/checklists/${uid}`)
+            .set({title: value})
+            .then(() => {
+                dispatch({type: AUTOSAVE_TRUE});
+                console.log('checklist save');
+            });
+    };
+
+};
+
+export const checkListCheckedUpdate = ({prop, index}) => {
     console.log('inside item checked Update ', prop, index);
     return {
         type: CHECKLIST_CHECKED_UPDATE,
-        payload: { prop, index },
+        payload: {prop, index},
     };
 };
 
-export const checkListItemsUpdate = ({ prop, index }) => {
-    console.log('inside item Update ', prop, index);
+export const checkListItemsUpdate = ({prop, index, uid}) => {
+    // const {currentUser} = firebase.auth();
+    console.log('inside item Update ', prop, index, uid);
+
     return {
         type: CHECKLIST_ITEM_UPDATE,
-        payload: { prop, index },
+        payload: {prop, index},
     };
+};
+
+
+export const checkListItemOnBlur = ({prop_obj, index, uid}) => {
+    const {currentUser} = firebase.auth();
+    const obj = {checked: prop_obj.checked, value: prop_obj.value};
+    console.log('inside item Blur Update1111qqq ', prop_obj, index, uid);
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`/user/${currentUser.uid}/checklists/${uid}/items/${index}`)
+            .update(obj)
+            .then(() => {
+                dispatch({type: AUTOSAVE_TRUE});
+                console.log('checklist save');
+            });
+    };
+
 };
 
 export const checkListAddItems = () => {
@@ -45,8 +88,8 @@ export const checkListAddItems = () => {
     };
 };
 
-export const checkListCreate = ({ title, items }) => {
-    const { currentUser } = firebase.auth();
+export const checkListCreate = ({title, items}) => {
+    const {currentUser} = firebase.auth();
 
     console.log('Checklist Action', currentUser);
     return dispatch => {
@@ -55,12 +98,12 @@ export const checkListCreate = ({ title, items }) => {
             .ref(`user/${currentUser.uid}/checklists`)
             .push();
         newRef
-            .set({ title, items })
+            .set({title, items})
             .then(data => {
                 //success callback
                 console.log('data ', data);
-                dispatch({ type: CHECKLIST_CREATE });
-                Actions.checkList({ type: 'reset' });
+                dispatch({type: CHECKLIST_CREATE});
+                Actions.checkList({type: 'reset'});
                 //this.props.navigation.goBack();
             })
             .catch(error => {
@@ -71,7 +114,7 @@ export const checkListCreate = ({ title, items }) => {
 };
 
 export const checkListFetch = () => {
-    const { currentUser } = firebase.auth();
+    const {currentUser} = firebase.auth();
 
     return dispatch => {
         firebase
@@ -87,24 +130,24 @@ export const checkListFetch = () => {
     };
 };
 
-export const checkListSave = ({ title, items, uid }) => {
-    const { currentUser } = firebase.auth();
+export const checkListSave = ({title, items, uid}) => {
+    const {currentUser} = firebase.auth();
     console.log('Checklist Save', title, items, uid);
 
     return dispatch => {
         firebase
             .database()
             .ref(`/user/${currentUser.uid}/checklists/${uid}`)
-            .set({ title, items })
+            .set({title, items})
             .then(() => {
                 console.log('checklist save');
-                dispatch({ type: CHECKLIST_SAVE_SUCCESS });
-                Actions.checkList({ type: 'reset' });
+                dispatch({type: CHECKLIST_SAVE_SUCCESS});
+                Actions.checkList({type: 'reset'});
             });
     };
 };
 
-export const checkListReset = ({ items, uid }) => {
+export const checkListReset = ({items, uid}) => {
     console.log('Checklist reset', items, uid);
     return {
         type: CHECKLIST_RESET_UPDATE,
@@ -112,8 +155,8 @@ export const checkListReset = ({ items, uid }) => {
     };
 };
 
-export const checkListDelete = ({ uid }) => {
-    const { currentUser } = firebase.auth();
+export const checkListDelete = ({uid}) => {
+    const {currentUser} = firebase.auth();
 
     return () => {
         firebase
@@ -123,7 +166,7 @@ export const checkListDelete = ({ uid }) => {
             .then(() => {
                 console.log('checklist delete');
                 //dispatch({ type: CHECKLIST_SAVE_SUCCESS });
-                Actions.checkList({ type: 'reset' });
+                Actions.checkList({type: 'reset'});
             });
     };
 };

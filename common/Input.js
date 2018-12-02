@@ -7,6 +7,7 @@ const Input = ({
     onChangeText,
     placeholder,
     secureTextEntry,
+    onBlur
 }) => {
     const { inputStyle, labelStyle, containerStyle } = styles;
 
@@ -20,6 +21,7 @@ const Input = ({
                 style={inputStyle}
                 value={value}
                 onChangeText={onChangeText}
+                onBlur={onBlur}
             />
         </View>
     );

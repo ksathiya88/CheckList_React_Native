@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, TextInput} from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import {Text, View, TextInput} from 'react-native';
+import {CheckBox, Badge} from 'react-native-elements';
 import {CardSection, Input, Card, Button} from '../common';
 import {
     checkListUpdate,
     checkListCheckedUpdate,
     checkListSave,
     checkListReset,
+    checkListItemsUpdate,
+    checkListAddItems,
+    checkListItemOnBlur,
+    makeAutoSaveFalse,
+    checkListItemOnBlurTitle
 } from '../actions';
 
 
@@ -53,6 +58,18 @@ class CheckListUse extends Component {
         });
     }
 
+    autoSave() {
+        if (this.props.autoSave) {
+            console.log("Autosave true");
+            setTimeout(() => {
+                this.props.makeAutoSaveFalse();
+            }, 3000);
+            return <Badge containerStyle={{ backgroundColor: 'violet'}}>
+                <Text>Auto Saved.</Text>
+            </Badge>
+        }
+    }
+
     render() {
         console.log('checklistForm--props', this.props);
         return (
@@ -66,7 +83,19 @@ class CheckListUse extends Component {
                     <Input
                         placeholder="CheckList Title"
                         value={this.props.title}
+                        onChangeText={value =>
+                            this.props.checkListUpdate({prop: 'title', value})
+                        }
+                        onBlur={() =>
+                            this.props.checkListItemOnBlurTitle({
+                                prop: 'title',
+                                value: this.props.title,
+                                uid: this.props.checklist.uid
+                            })
+                        }
                     />
+                    {this.autoSave()}
+
                 </CardSection>
                 {this.props.items.map((item, index) => (
                     <CardSection>
@@ -79,19 +108,47 @@ class CheckListUse extends Component {
                                         prop: !this.props.items[index].checked,
                                         index,
                                     });
+                                    this.props.checkListItemOnBlur({
+                                        prop_obj: this.props.items[index],
+                                        index,
+                                        uid: this.props.checklist.uid
+                                    });
                                 }}
+                                // onBlur={() =>
+                                //     this.props.checkListItemOnBlur({
+                                //         prop_obj: this.props.items[index],
+                                //         index,
+                                //         uid: this.props.checklist.uid
+                                //     })
+                                // }
                             />
                         </View>
                         <TextInput
                             placeholder="CheckList Item"
                             style={styles.inputStyle}
                             value={item.value}
+                            onChangeText={text =>
+                                this.props.checkListItemsUpdate({
+                                    prop: text,
+                                    index,
+                                    uid: this.props.checklist.uid
+                                })
+
+                            }
+                            onBlur={() =>
+                                this.props.checkListItemOnBlur({
+                                    prop_obj: this.props.items[index],
+                                    index,
+                                    uid: this.props.checklist.uid
+                                })
+                            }
                         />
+
                     </CardSection>
                 ))}
                 <CardSection>
-                    <Button onPress={this.onButtonPress.bind(this)}>
-                        Save
+                    <Button onPress={() => this.props.checkListAddItems()}>
+                        <Text> Add </Text>
                     </Button>
                 </CardSection>
             </Card>
@@ -133,12 +190,17 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const {title, items} = state.checkListForm;
+    const {title, items, autoSave} = state.checkListForm;
     console.log('checklistUse', title, items);
-    return {title, items};
+    return {title, items, autoSave};
 };
 
 export default connect(
     mapStateToProps,
-    {checkListUpdate, checkListCheckedUpdate, checkListSave, checkListReset}
+    {
+        checkListUpdate, checkListCheckedUpdate, checkListItemOnBlur,
+        checkListSave, checkListReset,
+        checkListItemsUpdate, checkListAddItems,
+        makeAutoSaveFalse,checkListItemOnBlurTitle
+    }
 )(CheckListUse);

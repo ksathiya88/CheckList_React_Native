@@ -6,12 +6,15 @@ import {
     CHECKLIST_ADD_ITEM,
     CHECKLIST_CHECKED_UPDATE,
     CHECKLIST_RESET_UPDATE,
+    AUTOSAVE_FALSE,
+    AUTOSAVE_TRUE
 } from '../constant';
 
 const item = {checked: false, value: ''};
 const INITIAL_STATE = {
     items: [item],
     title: '',
+    autoSave: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,6 +22,10 @@ export default (state = INITIAL_STATE, action) => {
     let itemsCopy = [];
     console.log('checklistform', state, action);
     switch (action.type) {
+        case AUTOSAVE_TRUE:
+            return {...state, autoSave: true};
+        case AUTOSAVE_FALSE:
+            return {...state, autoSave: false};
         case CHECKLIST_RESET_UPDATE:
             console.log('checklist reset update', state, action);
             stateTemp = {...state};
