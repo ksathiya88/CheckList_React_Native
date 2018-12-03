@@ -7,14 +7,16 @@ import {
     CHECKLIST_CHECKED_UPDATE,
     CHECKLIST_RESET_UPDATE,
     AUTOSAVE_FALSE,
-    AUTOSAVE_TRUE
+    AUTOSAVE_TRUE,
+    ERROR
 } from '../constant';
 
 const item = {checked: false, value: ''};
 const INITIAL_STATE = {
     items: [item],
     title: '',
-    autoSave: false
+    autoSave: false,
+    error: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,8 +24,21 @@ export default (state = INITIAL_STATE, action) => {
     let itemsCopy = [];
     console.log('checklistform', state, action);
     switch (action.type) {
+        case ERROR:
+            return {...state, error: action.payload};
         case AUTOSAVE_TRUE:
-            return {...state, autoSave: true};
+            const filteredItems = state.items.filter((itemValue) => {
+                return itemValue.value === '';
+            });
+            if (state.title === '') {
+                filteredItems.push(state.title);
+            }
+            console.log("Filtered Items", filteredItems);
+            if (filteredItems.length > 0) {
+                return {...state, autoSave: true};
+            } else {
+                return {...state, autoSave: true, error: ''};
+            }
         case AUTOSAVE_FALSE:
             return {...state, autoSave: false};
         case CHECKLIST_RESET_UPDATE:

@@ -10,7 +10,7 @@ import {
     CHECKLIST_CHECKED_UPDATE,
     CHECKLIST_RESET_UPDATE,
     AUTOSAVE_TRUE,
-    AUTOSAVE_FALSE
+    AUTOSAVE_FALSE, ERROR
 } from '../constant';
 
 export const moveToRegister = () => {
@@ -32,6 +32,13 @@ export const checkListUpdate = ({prop, value}) => {
 
 export const checkListItemOnBlurTitle = ({prop, value, uid}) => {
     const {currentUser} = firebase.auth();
+    if (value === '') {
+        return {
+            type: ERROR,
+            payload: "Value cannot be empty",
+        };
+    }
+
     console.log('inside item Blur Title Update1111 ', prop, value, uid);
     return dispatch => {
         firebase
@@ -67,6 +74,13 @@ export const checkListItemsUpdate = ({prop, index, uid}) => {
 
 export const checkListItemOnBlur = ({prop_obj, index, uid}) => {
     const {currentUser} = firebase.auth();
+    if (prop_obj.value === '') {
+        return {
+            type: ERROR,
+            payload: "Value cannot be empty",
+        };
+    }
+
     const obj = {checked: prop_obj.checked, value: prop_obj.value};
     console.log('inside item Blur Update1111qqq ', prop_obj, index, uid);
     return dispatch => {

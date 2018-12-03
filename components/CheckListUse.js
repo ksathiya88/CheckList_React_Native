@@ -64,10 +64,65 @@ class CheckListUse extends Component {
             setTimeout(() => {
                 this.props.makeAutoSaveFalse();
             }, 3000);
-            return <Badge containerStyle={{ backgroundColor: 'violet'}}>
+            return <Badge containerStyle={{backgroundColor: 'violet'}}>
                 <Text>Auto Saved.</Text>
             </Badge>
         }
+    }
+
+    textTitle() {
+        let errorValue;
+        if (this.props.error !== '' && this.props.title === '') {
+            console.log("Error title");
+            errorValue = true;
+        } else {
+            console.log("No Error");
+            errorValue = false;
+        }
+        return (<Input
+            placeholder="CheckList Title"
+            value={this.props.title}
+            onError={errorValue}
+            onChangeText={value =>
+                this.props.checkListUpdate({prop: 'title', value})
+            }
+            onBlur={() =>
+                this.props.checkListItemOnBlurTitle({
+                    prop: 'title',
+                    value: this.props.title,
+                    uid: this.props.checklist.uid
+                })
+            }
+        />);
+    }
+
+    textInput(item, index) {
+        let styleInput;
+        if (this.props.error !== '' && item.value === '') {
+
+            styleInput = styles.inputErrorStyle;
+        } else {
+            styleInput = styles.inputStyle;
+        }
+        return (<TextInput
+            placeholder="CheckList Item"
+            style={styleInput}
+            value={item.value}
+            onChangeText={text =>
+                this.props.checkListItemsUpdate({
+                    prop: text,
+                    index,
+                    uid: this.props.checklist.uid
+                })
+            }
+            onBlur={() =>
+                this.props.checkListItemOnBlur({
+                    prop_obj: this.props.items[index],
+                    index,
+                    uid: this.props.checklist.uid
+                })
+            }
+        />);
     }
 
     render() {
@@ -80,20 +135,7 @@ class CheckListUse extends Component {
                     </Button>
                 </CardSection>
                 <CardSection>
-                    <Input
-                        placeholder="CheckList Title"
-                        value={this.props.title}
-                        onChangeText={value =>
-                            this.props.checkListUpdate({prop: 'title', value})
-                        }
-                        onBlur={() =>
-                            this.props.checkListItemOnBlurTitle({
-                                prop: 'title',
-                                value: this.props.title,
-                                uid: this.props.checklist.uid
-                            })
-                        }
-                    />
+                    {this.textTitle()}
                     {this.autoSave()}
 
                 </CardSection>
@@ -122,30 +164,13 @@ class CheckListUse extends Component {
                                 //     })
                                 // }
                             />
-                        </View>
-                        <TextInput
-                            placeholder="CheckList Item"
-                            style={styles.inputStyle}
-                            value={item.value}
-                            onChangeText={text =>
-                                this.props.checkListItemsUpdate({
-                                    prop: text,
-                                    index,
-                                    uid: this.props.checklist.uid
-                                })
 
-                            }
-                            onBlur={() =>
-                                this.props.checkListItemOnBlur({
-                                    prop_obj: this.props.items[index],
-                                    index,
-                                    uid: this.props.checklist.uid
-                                })
-                            }
-                        />
+                        </View>
+                        {this.textInput(item, index)}
 
                     </CardSection>
                 ))}
+                <Text style={styles.errorTextStyle}>{this.props.error}</Text>
                 <CardSection>
                     <Button onPress={() => this.props.checkListAddItems()}>
                         <Text> Add </Text>
@@ -171,11 +196,30 @@ const styles = {
         fontSize: 18,
         paddingLeft: 20,
     },
+    inputErrorStyle: {
+        color: '#007aff',
+        fontSize: 18,
+        paddingLeft: 20,
+        borderColor: "red",
+        borderWidth: 3
+    },
+    errorTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: 'red',
+    },
     badgeStyle: {
         height: 40,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    titleInputError: {
+        color: '#007aff',
+        fontSize: 18,
+        paddingLeft: 20,
+        borderColor: "red",
+        borderWidth: 3
     },
     containerStyle: {
         borderWidth: 1,
@@ -187,12 +231,20 @@ const styles = {
         flexDirection: 'row',
         position: 'relative',
     },
+    inputTitleStyle: {
+        color: '#007aff',
+        paddingRight: 5,
+        paddingLeft: 5,
+        fontSize: 18,
+        lineHeight: 23,
+        flex: 2,
+    },
 };
 
 const mapStateToProps = state => {
-    const {title, items, autoSave} = state.checkListForm;
+    const {title, items, autoSave, error} = state.checkListForm;
     console.log('checklistUse', title, items);
-    return {title, items, autoSave};
+    return {title, items, autoSave, error};
 };
 
 export default connect(
@@ -201,6 +253,6 @@ export default connect(
         checkListUpdate, checkListCheckedUpdate, checkListItemOnBlur,
         checkListSave, checkListReset,
         checkListItemsUpdate, checkListAddItems,
-        makeAutoSaveFalse,checkListItemOnBlurTitle
+        makeAutoSaveFalse, checkListItemOnBlurTitle
     }
 )(CheckListUse);

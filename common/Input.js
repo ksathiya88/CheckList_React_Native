@@ -1,16 +1,19 @@
 import React from 'react';
-import { TextInput, View, Text } from 'react-native';
+import {TextInput, View, Text} from 'react-native';
 
 const Input = ({
-    label,
-    value,
-    onChangeText,
-    placeholder,
-    secureTextEntry,
-    onBlur
-}) => {
-    const { inputStyle, labelStyle, containerStyle } = styles;
-
+                   label,
+                   value,
+                   onChangeText,
+                   placeholder,
+                   secureTextEntry,
+                   onBlur,
+                   onError
+               }) => {
+    let {inputStyle, labelStyle, containerStyle} = styles;
+    if (onError) {
+        inputStyle = styles.inputErrorStyle;
+    }
     return (
         <View style={containerStyle}>
             <Text style={labelStyle}>{label}</Text>
@@ -36,6 +39,16 @@ const styles = {
         lineHeight: 23,
         flex: 2,
     },
+    inputErrorStyle: {
+        borderColor: 'red',
+        borderWidth: 3,
+        color: '#007aff',
+        paddingRight: 5,
+        paddingLeft: 5,
+        fontSize: 18,
+        lineHeight: 23,
+        flex: 2,
+    },
     labelStyle: {
         fontSize: 18,
         paddingLeft: 20,
@@ -54,4 +67,4 @@ const styles = {
     },
 };
 
-export { Input };
+export {Input};

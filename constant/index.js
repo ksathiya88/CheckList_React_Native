@@ -23,3 +23,4 @@ export const CHECKLIST_CHECKED_UPDATE = 'checklist_checked_update';
 export const CHECKLIST_RESET_UPDATE = 'checklist_reset_update';
 export const AUTOSAVE_TRUE = 'autosave_true';
 export const AUTOSAVE_FALSE = 'autosave_false';
+export const ERROR = 'error';
