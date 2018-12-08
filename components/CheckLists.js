@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
+import Swipeout from 'react-native-swipeout';
 import {View, Text, ListView, ScrollView} from 'react-native';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {logout} from '../actions/AuthActions';
-import {checkListFetch} from '../actions/ChecklistActions';
+import {checkListFetch,checkListDelete} from '../actions/ChecklistActions';
 import ListItem from './ListItem';
 import RadioUseEdit from './RadioUseEdit';
+
 
 import {Card, CardSection, Button} from '../common/index';
 
 //import CheckList from './components/checklist';
 
 class CheckLists extends Component {
+    propObject=this.props;
     componentWillMount() {
         this.props.checkListFetch();
-
+        this.propObject=this.props;
         this.createDataSource(this.props);
     }
 
@@ -39,14 +42,23 @@ class CheckLists extends Component {
         this.dataSource = ds.cloneWithRows(checklists);
     }
 
-    renderRow(checklist) {
-        return <ListItem checklist={checklist}/>;
+    renderRow(checklist, propObject) {
+        //console.log("Checklist4444444 Delete", checklist, propObject);
+        const swipeBtns = [{
+            text: 'Delete',
+            backgroundColor: 'red',
+            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+            onPress: () => { propObject.checkListDelete(checklist)}
+        }];
+        return (<Swipeout right={swipeBtns}>
+                <ListItem checklist={checklist} />
+                </Swipeout>);
     }
 
     render() {
         console.log('heellloooooo1111', this.props);
         console.log('heellloooooo2222');
-
+        const propObject = this.props;
         return (
             <ScrollView>
                 <Card>
@@ -59,7 +71,7 @@ class CheckLists extends Component {
                 <ListView
                     enableEmptySections
                     dataSource={this.dataSource}
-                    renderRow={this.renderRow}
+                    renderRow={(checklist)=>{return this.renderRow(checklist, this.props)}}
                 />
                 <RadioUseEdit/>
             </ScrollView>
@@ -79,5 +91,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {logout, checkListFetch}
+    {logout, checkListFetch,checkListDelete}
 )(CheckLists);

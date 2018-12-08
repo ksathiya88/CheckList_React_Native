@@ -96,6 +96,34 @@ export const checkListItemOnBlur = ({prop_obj, index, uid}) => {
 
 };
 
+export const checkListItemDelete =(index, checklist) =>{
+    const {currentUser} = firebase.auth();
+
+   // const obj = {checked: prop_obj.checked, value: prop_obj.value};
+    console.log('checkListItem Delete ', index, checklist.uid);
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`/user/${currentUser.uid}/checklists/${checklist.uid}/items/${index}`)
+            .remove()
+            .then(() => {
+                //dispatch({type: AUTOSAVE_TRUE});
+                console.log('checklist Item delete333333333');
+                firebase
+                    .database()
+                    .ref(`/user/${currentUser.uid}/checklists/${checklist.uid}`)
+                    .on('value', snapshot => {
+                        console.log('fetch_value item delete', snapshot.val());
+                        Actions.checklistUse({
+                            checklist: snapshot.val(),
+                        });
+                    });
+
+            });
+    };
+
+};
+
 export const checkListAddItems = () => {
     return {
         type: CHECKLIST_ADD_ITEM,
@@ -169,8 +197,11 @@ export const checkListReset = ({items, uid}) => {
     };
 };
 
+
+
 export const checkListDelete = ({uid}) => {
     const {currentUser} = firebase.auth();
+    console.log("CheckListDelete2222333 ", uid);
 
     return () => {
         firebase

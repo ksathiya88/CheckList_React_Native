@@ -7,9 +7,12 @@ import React, { Component } from 'react';
 import ReduxThunk from 'redux-thunk';
 import reducer from './reducers';
 import Router from './Router';
+// import App from './App';
+
+// AppRegistry.registerComponent('checklist', () => App);
+
 
 class Index extends Component {
-
 
     render() {
         const store = createStore(reducer, {}, applyMiddleware(ReduxThunk));
