@@ -19,6 +19,15 @@ import {
 
 
 class CheckListUse extends Component {
+
+    onExit() {
+        console.log("Exit called");
+    }
+
+    onEnter() {
+        console.log("Enter called");
+    }
+
     componentWillMount() {
         console.log('checklist use', this.props.checklist);
         this.props.checkListUpdate({
@@ -161,7 +170,7 @@ class CheckListUse extends Component {
 
     render() {
         console.log('checklistForm--props', this.props);
-
+        console.log('checklistForm--props--checkList', this.props.checklist);
 
         return (
             <Card>
@@ -176,6 +185,7 @@ class CheckListUse extends Component {
 
                 </CardSection>
                 {this.props.items.map((item, index) => {
+                    console.log("index Item",index);
                     if (item) {
                         return this.rowData(item,index);
                     }

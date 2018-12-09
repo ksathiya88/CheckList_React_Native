@@ -32,6 +32,13 @@ const RouterComponent = (props) => {
                 />
                 <Scene
                     key="checklistUse"
+                    onBack={(event) => {
+                        console.log("Back is called", event);
+                    }}
+                    onExit={() => Actions.reset("checkList")}
+                    onEnter={() => {
+                        console.log("ENTER is called");
+                    }}
                     component={ChecklistUse}
                     title="Use Checklist"
                 />

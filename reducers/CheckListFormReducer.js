@@ -7,6 +7,7 @@ import {
     CHECKLIST_CHECKED_UPDATE,
     CHECKLIST_RESET_UPDATE,
     AUTOSAVE_FALSE,
+    CHECKLIST_ITEM_DELETE,
     AUTOSAVE_TRUE,
     ERROR
 } from '../constant';
@@ -39,6 +40,14 @@ export default (state = INITIAL_STATE, action) => {
             } else {
                 return {...state, autoSave: true, error: ''};
             }
+        case CHECKLIST_ITEM_DELETE:
+            console.log('checklist item delete', state, action);
+            stateTemp = {...state};
+            itemsCopy = state.items.slice();
+            itemsCopy.splice(action.payload, 1);
+            console.log(stateTemp);
+            return {...stateTemp, items: itemsCopy};
+
         case AUTOSAVE_FALSE:
             return {...state, autoSave: false};
         case CHECKLIST_RESET_UPDATE:
@@ -57,7 +66,7 @@ export default (state = INITIAL_STATE, action) => {
             return {...stateTemp, items: itemsCopy};
         case CHECKLIST_UPDATE:
             console.log('checklistupdate', state, action);
-            return {...state, [action.payload.prop]: action.payload.value};
+            return {...state, [action.payload.prop]: action.payload.value, error: ''};
         case CHECKLIST_ITEM_UPDATE:
             console.log('checklistitem update', state, action);
             stateTemp = {...state};

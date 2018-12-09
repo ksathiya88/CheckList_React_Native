@@ -4,9 +4,8 @@ import {View, Text, ListView, ScrollView} from 'react-native';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {logout} from '../actions/AuthActions';
-import {checkListFetch,checkListDelete} from '../actions/ChecklistActions';
+import {checkListFetch, checkListDelete} from '../actions/ChecklistActions';
 import ListItem from './ListItem';
-import RadioUseEdit from './RadioUseEdit';
 
 
 import {Card, CardSection, Button} from '../common/index';
@@ -14,10 +13,11 @@ import {Card, CardSection, Button} from '../common/index';
 //import CheckList from './components/checklist';
 
 class CheckLists extends Component {
-    propObject=this.props;
+    propObject = this.props;
+
     componentWillMount() {
         this.props.checkListFetch();
-        this.propObject=this.props;
+        this.propObject = this.props;
         this.createDataSource(this.props);
     }
 
@@ -43,16 +43,30 @@ class CheckLists extends Component {
     }
 
     renderRow(checklist, propObject) {
-        //console.log("Checklist4444444 Delete", checklist, propObject);
+        console.log("Checklist4444444 Delete", checklist, propObject);
+        if (!Array.isArray(checklist.items)) {
+            console.log("came inside ", checklist.title)
+            let items = [];
+            for (let i in checklist.items) {
+                if (typeof items[i] === 'object') {
+                    items.push(i, checklist.items[i]);
+                }
+            }
+            checklist.items = items;
+        }
+        console.log("Checklist4444444 Delete changed ", checklist, propObject);
+
         const swipeBtns = [{
             text: 'Delete',
             backgroundColor: 'red',
             underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
-            onPress: () => { propObject.checkListDelete(checklist)}
+            onPress: () => {
+                propObject.checkListDelete(checklist)
+            }
         }];
         return (<Swipeout right={swipeBtns}>
-                <ListItem checklist={checklist} />
-                </Swipeout>);
+            <ListItem checklist={checklist}/>
+        </Swipeout>);
     }
 
     render() {
@@ -71,9 +85,10 @@ class CheckLists extends Component {
                 <ListView
                     enableEmptySections
                     dataSource={this.dataSource}
-                    renderRow={(checklist)=>{return this.renderRow(checklist, this.props)}}
+                    renderRow={(checklist) => {
+                        return this.renderRow(checklist, this.props)
+                    }}
                 />
-                <RadioUseEdit/>
             </ScrollView>
         );
         // return <View> {this.renderContent()} </View>;
@@ -91,5 +106,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {logout, checkListFetch,checkListDelete}
+    {logout, checkListFetch, checkListDelete}
 )(CheckLists);

@@ -10,7 +10,7 @@ import {
     CHECKLIST_CHECKED_UPDATE,
     CHECKLIST_RESET_UPDATE,
     AUTOSAVE_TRUE,
-    AUTOSAVE_FALSE, ERROR
+    AUTOSAVE_FALSE, ERROR, CHECKLIST_ITEM_DELETE
 } from '../constant';
 
 export const moveToRegister = () => {
@@ -96,11 +96,10 @@ export const checkListItemOnBlur = ({prop_obj, index, uid}) => {
 
 };
 
-export const checkListItemDelete =(index, checklist) =>{
+export const checkListItemDelete = (index, checklist) => {
     const {currentUser} = firebase.auth();
-
-   // const obj = {checked: prop_obj.checked, value: prop_obj.value};
-    console.log('checkListItem Delete ', index, checklist.uid);
+    // const obj = {checked: prop_obj.checked, value: prop_obj.value};
+    console.log('checkListItem Delete ', index, checklist, checklist.uid);
     return dispatch => {
         firebase
             .database()
@@ -109,20 +108,13 @@ export const checkListItemDelete =(index, checklist) =>{
             .then(() => {
                 //dispatch({type: AUTOSAVE_TRUE});
                 console.log('checklist Item delete333333333');
-                firebase
-                    .database()
-                    .ref(`/user/${currentUser.uid}/checklists/${checklist.uid}`)
-                    .on('value', snapshot => {
-                        console.log('fetch_value item delete', snapshot.val());
-                        Actions.checklistUse({
-                            checklist: snapshot.val(),
-                        });
-                    });
-
+                dispatch({
+                    type: CHECKLIST_ITEM_DELETE, payload: index
+                });
             });
     };
-
 };
+
 
 export const checkListAddItems = () => {
     return {
@@ -196,7 +188,6 @@ export const checkListReset = ({items, uid}) => {
         payload: items,
     };
 };
-
 
 
 export const checkListDelete = ({uid}) => {

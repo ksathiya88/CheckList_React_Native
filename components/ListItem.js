@@ -11,6 +11,7 @@ class ListItem extends Component {
         if (this.props.selectedOption === 'USE') {
             console.log('Use ---');
             Actions.checklistUse({
+                onBack: () => console.log('custom back callback'),
                 checklist: this.props.checklist,
             });
         } else {

@@ -15,6 +15,7 @@ export const INTIAL_LOGIN_STATE = 'intial_login_state';
 export const CHECKLIST_UPDATE = 'checklist_update';
 export const CHECKLIST_ITEM_UPDATE = 'checklist_item_update';
 export const CHECKLIST_ADD_ITEM = 'checklist_add_item';
+export const CHECKLIST_ITEM_DELETE = 'checklist_item_delete';
 export const CHECKLIST_CREATE = 'checklist_create';
 export const CHECKLISTS_FETCH_SUCCESS = 'checklist_fetch_success';
 export const CHECKLIST_SAVE_SUCCESS = 'checklist_save_success';
