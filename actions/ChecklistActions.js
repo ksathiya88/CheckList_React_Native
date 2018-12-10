@@ -131,16 +131,17 @@ export const checkListCreate = ({title, items}) => {
             .database()
             .ref(`user/${currentUser.uid}/checklists`)
             .push();
+
         newRef
             .set({title, items})
-            .then(data => {
+            .then((data) => {
                 //success callback
-                console.log('data ', data);
-                dispatch({type: CHECKLIST_CREATE});
-                Actions.checkList({type: 'reset'});
+                console.log('checklistCreate data ', data, newRef.key);
+                dispatch({type: CHECKLIST_CREATE, payload: newRef.key});
+                //Actions.checkList({type: 'reset'});
                 //this.props.navigation.goBack();
             })
-            .catch(error => {
+            .catch((error) => {
                 //error callback
                 console.log('error ', error);
             });

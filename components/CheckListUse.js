@@ -136,36 +136,53 @@ class CheckListUse extends Component {
         />);
     }
 
-    rowData(item,index){
+    checkBox(item,index) {
+        if (!this.props.create) {
+            return (<View style={styles.labelStyle}>
+                <CheckBox
+                    title="Done"
+                    checked={item.checked}
+                    onPress={() => {
+                        this.props.checkListCheckedUpdate({
+                            prop: !this.props.items[index].checked,
+                            index,
+                        });
+                        this.props.checkListItemOnBlur({
+                            prop_obj: this.props.items[index],
+                            index,
+                            uid: this.props.checklist.uid
+                        });
+                    }}
+                />
+            </View>);
+        }
+    }
+
+    rowData(item, index) {
         return (<Swipeout right={[{
             text: 'Delete',
             backgroundColor: 'red',
             underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
             onPress: () => {
-                this.props.checkListItemDelete(index,this.props.checklist);
-            } }]}>
+                this.props.checkListItemDelete(index, this.props.checklist);
+            }
+        }]}>
             <CardSection>
-                <View style={styles.labelStyle}>
-                    <CheckBox
-                        title="Done"
-                        checked={item.checked}
-                        onPress={() => {
-                            this.props.checkListCheckedUpdate({
-                                prop: !this.props.items[index].checked,
-                                index,
-                            });
-                            this.props.checkListItemOnBlur({
-                                prop_obj: this.props.items[index],
-                                index,
-                                uid: this.props.checklist.uid
-                            });
-                        }}
-                    />
-                </View>
+                {this.checkBox(item, index)}
                 {this.textInput(item, index)}
             </CardSection>
         </Swipeout>);
 
+    }
+
+    reset() {
+        if (!this.props.create) {
+            return (<CardSection>
+                <Button onPress={this.onResetPress.bind(this)}>
+                    Reset
+                </Button>
+            </CardSection>);
+        }
     }
 
     render() {
@@ -174,20 +191,16 @@ class CheckListUse extends Component {
 
         return (
             <Card>
-                <CardSection>
-                    <Button onPress={this.onResetPress.bind(this)}>
-                        Reset
-                    </Button>
-                </CardSection>
+                {this.reset()}
                 <CardSection>
                     {this.textTitle()}
                     {this.autoSave()}
 
                 </CardSection>
                 {this.props.items.map((item, index) => {
-                    console.log("index Item",index);
+                    console.log("index Item", index);
                     if (item) {
-                        return this.rowData(item,index);
+                        return this.rowData(item, index);
                     }
                 })}
                 <Text style={styles.errorTextStyle}>{this.props.error}</Text>
@@ -274,6 +287,6 @@ export default connect(
         checkListUpdate, checkListCheckedUpdate, checkListItemOnBlur,
         checkListSave, checkListReset,
         checkListItemsUpdate, checkListAddItems,
-        makeAutoSaveFalse, checkListItemOnBlurTitle,checkListItemDelete
+        makeAutoSaveFalse, checkListItemOnBlurTitle, checkListItemDelete
     }
 )(CheckListUse);

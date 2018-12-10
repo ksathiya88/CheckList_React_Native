@@ -17,7 +17,8 @@ const INITIAL_STATE = {
     items: [item],
     title: '',
     autoSave: false,
-    error: ''
+    error: '',
+    uid: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -75,14 +76,16 @@ export default (state = INITIAL_STATE, action) => {
             console.log(stateTemp);
             return {...stateTemp, items: itemsCopy};
         case CHECKLIST_ADD_ITEM:
-            console.log('checklistadd_item', state, action);
+            console.log('checklistadd_item', state, action, item);
             stateTemp = {...state};
             itemsCopy = state.items.slice();
-            itemsCopy.push({...item});
+            itemsCopy.push({checked: false, value: ''});
             console.log(stateTemp);
-            return {...stateTemp, items: itemsCopy};
+            const fff = {...stateTemp, items: itemsCopy};
+            console.log("returnedObj", fff);
+            return fff;
         case CHECKLIST_CREATE:
-            return INITIAL_STATE;
+            return {...INITIAL_STATE, uid: action.payload};
         case CHECKLIST_SAVE_SUCCESS:
             return INITIAL_STATE;
         default:
