@@ -44,7 +44,7 @@ export const checkListItemOnBlurTitle = ({prop, value, uid}) => {
         firebase
             .database()
             .ref(`/user/${currentUser.uid}/checklists/${uid}`)
-            .set({title: value})
+            .update({title: value})
             .then(() => {
                 dispatch({type: AUTOSAVE_TRUE});
                 console.log('checklist save');

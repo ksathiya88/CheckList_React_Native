@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
 import com.android.build.OutputFile
 
 /**
@@ -101,8 +100,8 @@ android {
         applicationId "com.daily.checklist"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -148,6 +147,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sqlite-storage')
     compile project(':react-native-vector-icons')
     compile project(':react-native-firebase')
     implementation project(':react-native-firebase')
@@ -167,3 +167,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.google.gms.google-services';

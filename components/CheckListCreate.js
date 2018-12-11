@@ -6,7 +6,7 @@ import CheckListUse from './CheckListUse';
 
 class CheckListCreate extends Component {
     componentWillMount() {
-        this.props.checkListCreate({title: 'CheckList Name', items: {value: 'Item 1', checked: false}});
+        this.props.checkListCreate({title: 'CheckList Name', items: [{value: 'Item 1', checked: false}]});
     }
 
 
@@ -23,7 +23,7 @@ class CheckListCreate extends Component {
 const mapStateToProps = state => {
     console.log('createProps', state);
     const {uid} = state.checkListForm;
-    return {checklist: {title: 'CheckList Name', items: [{checked: false, value: 'Item 1'}], uid},create: true};
+    return {checklist: {title: 'CheckList Name', items: [{checked: false, value: 'Item 1'}], uid}, create: true};
 };
 
 export default connect(
