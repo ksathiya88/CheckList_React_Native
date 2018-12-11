@@ -16,9 +16,8 @@ const RouterComponent = (props) => {
                 <Scene
                     key="checkList"
                     component={CheckLists}
-                    onRight={() => Actions.checklistCreate()}
-                    rightTitle="Create CheckList"
-                    intial title="Checklist"
+                    onRight={() => console.log("hello")}
+                    hideNavBar
                 />
                 <Scene
                     key="checklistCreate"

@@ -6,6 +6,9 @@ import {connect} from 'react-redux';
 import {logout} from '../actions/AuthActions';
 import {checkListFetch, checkListDelete} from '../actions/ChecklistActions';
 import ListItem from './ListItem';
+import {Actions} from 'react-native-router-flux';
+import NavigationBar from 'react-native-navbar';
+import {Icon} from 'react-native-elements';
 
 
 import {Card, CardSection, Button} from '../common/index';
@@ -73,12 +76,40 @@ class CheckLists extends Component {
         console.log('heellloooooo1111', this.props);
         console.log('heellloooooo2222');
         const propObject = this.props;
+        const rightButtonConfig = {
+            title: 'Save',
+            tintColor: 'blue',
+            handler: () => console.log('Saved'),
+        };
+        const styles = {
+            container: {
+                display: 'flex'
+            },
+        };
+
+        const titleConfig = {
+            title: 'Checklist',
+        };
+
+
         return (
             <ScrollView>
+                <View style={styles.container}>
+                    <NavigationBar
+                        title={titleConfig}
+                        rightButton={
+                            <Icon
+                                iconStyle={{padding: 10}}
+                                name='sign-out'
+                                type='font-awesome'
+                                onPress={() => this.onButtonPress()}/>
+                        }
+                    />
+                </View>
                 <Card>
                     <CardSection>
-                        <Button onPress={() => this.props.logout()}>
-                            <Text> logout </Text>
+                        <Button onPress={() => Actions.checklistCreate()}>
+                            <Text> Create Checklist </Text>
                         </Button>
                     </CardSection>
                 </Card>

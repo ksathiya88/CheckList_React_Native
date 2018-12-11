@@ -85,7 +85,11 @@ export default (state = INITIAL_STATE, action) => {
             console.log("returnedObj", fff);
             return fff;
         case CHECKLIST_CREATE:
-            return {...INITIAL_STATE, uid: action.payload};
+            return {
+                ...INITIAL_STATE, title: 'CheckList Name',
+                items: [{value: "Item 1", checked: false}],
+                uid: action.payload
+            };
         case CHECKLIST_SAVE_SUCCESS:
             return INITIAL_STATE;
         default:
